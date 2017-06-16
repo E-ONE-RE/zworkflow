@@ -8,7 +8,6 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("Workflow.controller.Object", {
-
 		formatter: formatter,
 
 		/* =========================================================== */
@@ -33,6 +32,7 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
+		    
 			
 			this.setModel(oViewModel, "objectView");
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
@@ -40,12 +40,9 @@ sap.ui.define([
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 				oViewModel.setProperty("/busy", false);
 			});
-			    var oTable = this.byId("table2");
-			   	iOriginalBusyDelay2 = oTable.getBusyIndicatorDelay();
-				oTable.attachEventOnce("updateFinished", function() {
-				// Restore original busy indicator delay for worklist's table
-				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay2);
-			});
+			    
+			   
+			
 		},
 
 		/* =========================================================== */
@@ -56,6 +53,11 @@ sap.ui.define([
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
 		 */
+
+ 
+	
+		
+		
 		onShareInJamPress: function() {
 			var oViewModel = this.getModel("objectView"),
 				oShareDialog = sap.ui.getCore().createComponent({
@@ -124,7 +126,6 @@ sap.ui.define([
 			var oViewModel = this.getModel("objectView");
 			this.getView().bindElement({
 				path: sObjectPath,
-				parameters: {$expand:"TaskHstSet"},
 				events: {
 					change: this._onBindingChange.bind(this),
 					dataRequested: function() {

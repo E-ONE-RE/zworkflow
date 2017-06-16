@@ -1,13 +1,24 @@
 sap.ui.define([
 	"Workflow/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
-	"Workflow/model/formatter"
+	"Workflow/model/formatter",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
 ], function(BaseController, JSONModel, formatter) {
 	"use strict";
+
 
 	return BaseController.extend("Workflow.controller.Worklist", {
 
 		formatter: formatter,
+	
+		
+		//Filter
+			_mFilters: {
+				lessUrgent: [new sap.ui.model.Filter("IconId", "EQ", 1)],
+				Urgent: [new sap.ui.model.Filter("IconId", "EQ", 2)],
+				moreUrgent: [new sap.ui.model.Filter("IconId", "EQ", 3)]
+			},
 
 		/* =========================================================== */
 		/* lifecycle methods                                           */
@@ -21,7 +32,7 @@ sap.ui.define([
 			var oViewModel,
 				iOriginalBusyDelay,
 				oTable = this.byId("table");
-
+                this._oTable = oTable;
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
@@ -34,7 +45,10 @@ sap.ui.define([
 				shareOnJamTitle: this.getResourceBundle().getText("worklistViewTitle"),
 				shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
 				shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
-				tableBusyDelay: 0
+				tableBusyDelay: 0,
+			    lessUrgent: 0,
+				Urgent: 0,
+				moreUrgent: 0
 			});
 			this.setModel(oViewModel, "worklistView");
 
@@ -60,15 +74,44 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent the update finished event
 		 * @public
 		 */
+		 
+		 //Quick Filter
+		 
+		 	onQuickFilter: function(oEvent) {
+			   var sKey = oEvent.getParameter("selectedKey"),
+			        _sKey= sKey,
+					oFilter = this._mFilters[sKey],
+					oBinding = this._oTable.getBinding("items");
+                    
+				if (oFilter) {
+					oBinding.filter(oFilter);		   		   	
+				} else {
+					oBinding.filter([]);	
+				}
+			},
+			
+			
+			
 		onUpdateFinished: function(oEvent) {
 			// update the worklist's object counter after the table update
 			var sTitle,
 				oTable = oEvent.getSource(),
+				oModel = this.getModel(),
+					oViewModel = this.getModel("worklistView"),
 				iTotalItems = oEvent.getParameter("total");
 			// only update the counter if the length is final and
 			// the table is not empty
 			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
 				sTitle = this.getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
+				jQuery.each(this._mFilters, function (sFilterKey, oFilter) {
+						oModel.read("/TaskSet/$count", {
+							filters: oFilter,
+							success: function (oData) {
+								var sPath = "/" + sFilterKey;
+								oViewModel.setProperty(sPath, oData);
+							}
+						});
+					});
 			} else {
 				sTitle = this.getResourceBundle().getText("worklistTableTitle");
 			}
@@ -83,7 +126,6 @@ sap.ui.define([
 		onPress: function(oEvent) {
 			// The source is the list item that got pressed
 			this._showObject(oEvent.getSource());
-			
 		},
 
 		/**

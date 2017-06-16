@@ -1,6 +1,46 @@
 <mvc:View controllerName="Workflow.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:footerbar="sap.ushell.ui.footerbar">
-	<Page id="page" navButtonPress="onNavBack" showNavButton="true" title="{i18n>worklistViewTitle}">
+	
+	<Page id="page" 
+	navButtonPress="onNavBack" 
+	showNavButton="true"
+	title="{i18n>worklistViewTitle}"
+	floatingFooter="true">
 		<content>
+			<IconTabBar
+				id="iconTab"
+				expandable="false"
+			select="onQuickFilter"
+			backgroundDesign="Translucent"
+			applyContentPadding="false">
+				<items>
+					<IconTabFilter
+						key="all"
+						showAll="true"
+						icon= "sap-icon://database"
+						count="{i18n>worklistFilterTaskAllCount}"
+						text="Tutti i task"
+						/>
+					<IconTabSeparator/>
+					<IconTabFilter
+						key="lessUrgent"
+						icon="sap-icon://sys-enter-2"
+						iconColor="Positive"
+						count="{worklistView>/lessUrgent}"
+						text="Non urgenti"/>
+					<IconTabFilter
+						key="Urgent"
+						icon="sap-icon://alert"
+						iconColor="Critical"
+						count="{worklistView>/Urgent}"
+						text="Urgenti"/>
+					<IconTabFilter
+						key="moreUrgent"
+						icon="sap-icon://error"
+						iconColor="Negative"
+						count="{worklistView>/moreUrgent}"
+						text="Task critici"/>
+				</items>
+			</IconTabBar>
 			<Table id="table" width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished="onUpdateFinished">
@@ -11,7 +51,7 @@
 				</headerToolbar>
 						<columns>
 				<Column id="nameColumn">
-				 	<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
+				 	<Text text="Utente" id="nameColumnTitle"/>
 				</Column>
 				<Column id="nameColumn2">
 					<Text text="Task" id="nameColumnTitle2"/>

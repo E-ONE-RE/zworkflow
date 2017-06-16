@@ -40,6 +40,15 @@ sap.ui.define([], function() {
 				return oDate;
 			}
 		},
+		
+		
+
+formatTime	: function(oTime) {                                                            
+	var oTimeFormat = sap.ui.core.format.DateFormat.getTimeInstance({pattern: "HH:mm:ss"});
+	var TZOffsetMs = new Date(0).getTimezoneOffset()*60*1000;                             
+	var timeStr = oTimeFormat.format(new Date(oTime.ms + TZOffsetMs));                      
+	return timeStr;                                                                       
+},
 
 		
 	iconType: function(iDays) {
@@ -51,6 +60,22 @@ sap.ui.define([], function() {
 			return "sap-icon://alert";
 				}
 			},
+			
+ iconAction: function(sAction) {
+     switch(sAction) {
+    case "OK":
+       return "sap-icon://employee-approvals";
+        break;
+    case "KO":
+        return "sap-icon://employee-rejections";
+        break;
+    case "MOVE":
+        return "sap-icon://initiative";
+        break;
+    default:
+       return  "sap-icon://pending";
+}	
+ },
 			
 			statusType: function(iDays){
 				if(iDays<=5){

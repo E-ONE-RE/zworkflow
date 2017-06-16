@@ -1,3 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="Workflow.controller.App" displayBlock="true" xmlns="sap.m">
-	<App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}"/>
+	<App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}"
+	backgroundImage= "https://www.prismglobalmarketing.com/hubfs/MarCom.jpg?t=1493052615745"
+	backgroundOpacity="0.3"/>
 </mvc:View>
