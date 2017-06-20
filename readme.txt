@@ -8,4 +8,4 @@ This application is ready for client-side build in the SAP Web IDE and deploymen
 
 Enjoy development! POOOOOOOOOO
 
-test merge svil
+test
