@@ -1,7 +1,7 @@
 {
   "run": [
     {
-      "filePath": "/AppTest/webapp/test/testFLP.html",
+      "filePath": "/zworkflow/webapp/test/testFLP.html",
       "previewMode": 1,
       "dataMode": 1,
       "workspace": "withoutWorkspace",
@@ -17,7 +17,7 @@
           "paramActive": false
         }
       ],
-      "hashParameter": "AppTest-display",
+      "hashParameter": "zworkflow-display",
       "ui5ActiveVersion": null,
       "ui5VerSource": null,
       "isDefaultVersion": 1,
@@ -25,11 +25,39 @@
         "id": 1978925,
         "runnerId": "webapprunner",
         "displayName": "Run with Server",
-        "lastRunTimeStamp": 1497630222169
+        "lastRunTimeStamp": 1497944650461
       }
     },
     {
-      "filePath": "/AppTest/webapp/test/testFLPService.html",
+      "filePath": "/zworkflow/webapp/Component.js",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 1,
+      "urlParameters": [
+        {
+          "paramName": "",
+          "paramValue": "",
+          "paramActive": false
+        },
+        {
+          "paramName": "",
+          "paramValue": "",
+          "paramActive": false
+        }
+      ],
+      "hashParameter": "",
+      "_metadata": {
+        "id": 5239014,
+        "runnerId": "fiorirunner",
+        "displayName": "Fiori Component with Server",
+        "lastRunTimeStamp": 1497944624411
+      }
+    },
+    {
+      "filePath": "/zworkflow/webapp/test/testFLPService.html",
       "previewMode": 1,
       "dataMode": 1,
       "workspace": "withoutWorkspace",
@@ -45,7 +73,7 @@
           "paramActive": false
         }
       ],
-      "hashParameter": "AppTest-display",
+      "hashParameter": "zworkflow-display",
       "ui5ActiveVersion": null,
       "ui5VerSource": null,
       "isDefaultVersion": 1,
@@ -57,7 +85,7 @@
       }
     },
     {
-      "filePath": "/AppTest/webapp/test/unit/unitTests.qunit.html",
+      "filePath": "/zworkflow/webapp/test/unit/unitTests.qunit.html",
       "previewMode": 1,
       "dataMode": 1,
       "workspace": "withoutWorkspace",
@@ -83,7 +111,7 @@
       }
     },
     {
-      "filePath": "/AppTest/webapp/test/integration/opaTests.qunit.html",
+      "filePath": "/zworkflow/webapp/test/integration/opaTests.qunit.html",
       "previewMode": 1,
       "dataMode": 1,
       "workspace": "withoutWorkspace",
@@ -110,7 +138,7 @@
       }
     },
     {
-      "filePath": "/AppTest/webapp/test/testsuite.qunit.html",
+      "filePath": "/zworkflow/webapp/test/testsuite.qunit.html",
       "previewMode": 1,
       "dataMode": 1,
       "workspace": "withoutWorkspace",
@@ -134,33 +162,6 @@
         "id": 7524840,
         "runnerId": "webapprunner",
         "displayName": "Run all Tests"
-      }
-    },
-    {
-      "filePath": "/AppTest/webapp/Component.js",
-      "previewMode": 1,
-      "dataMode": 1,
-      "workspace": "withoutWorkspace",
-      "ui5ActiveVersion": null,
-      "ui5VerSource": null,
-      "isDefaultVersion": 1,
-      "urlParameters": [
-        {
-          "paramName": "",
-          "paramValue": "",
-          "paramActive": false
-        },
-        {
-          "paramName": "",
-          "paramValue": "",
-          "paramActive": false
-        }
-      ],
-      "hashParameter": "",
-      "_metadata": {
-        "id": 5239014,
-        "runnerId": "fiorirunner",
-        "displayName": "Fiori Component with Server"
       }
     }
   ]

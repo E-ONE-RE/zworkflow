@@ -8,9 +8,9 @@ sap.ui.define([
 		sUrlParameters = sUrlParameters ? "?" + sUrlParameters : "";
 
 		if (sHash) {
-			sHash = "#AppTest-display&/" + (sHash.indexOf("/") === 0 ? sHash.substring(1) : sHash);
+			sHash = "#zworkflow-display&/" + (sHash.indexOf("/") === 0 ? sHash.substring(1) : sHash);
 		} else {
-			sHash = "#AppTest-display";
+			sHash = "#zworkflow-display";
 		}
 
 		return sUrl + sUrlParameters + sHash;
