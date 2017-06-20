@@ -32,7 +32,7 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-		    
+		
 			
 			this.setModel(oViewModel, "objectView");
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
@@ -54,8 +54,14 @@ sap.ui.define([
 		 * @public
 		 */
 
- 
+          //Press the tile will make visible the table and the legend
+          onTilePress: function(){
+          	var oPanel = this.getView().byId("panel");
+          	if(oPanel.getVisible){
+          	oPanel.setVisible=false;}
+},
 	
+
 		
 		
 		onShareInJamPress: function() {
@@ -111,7 +117,6 @@ sap.ui.define([
 					ZWfTaskid: sObjectId2
 				});
 				this._bindView("/" + sObjectPath );
-				console.log(sObjectPath);
 			}.bind(this));
 		
 		},

@@ -2,9 +2,15 @@
 	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:smartTable="sap.ui.comp.smarttable"
 	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
+		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
+	
+			<StandardTile
+				title="To Task History"
+				info="Viasualize the task history"
+				 press = "onTilePress"/>
+
 		<content>
-	<Panel width="10rem" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
+	<Panel id="panel" width="10rem" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 		<headerToolbar>
 			<Toolbar height="2rem">
 				<Title text="Legend"/>
@@ -23,9 +29,8 @@
 				header="Task History" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToHst"
 				class="sapUiResponsiveContentPadding">
 				
-				<Table id="Table2" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true">
-					<columns>
-						<Column id="C1" width="auto" minScreenWidth="Phone" visible="true"
+				<Table id="Table2" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+					<columns>						<Column id="C1" width="auto" minScreenWidth="Phone" visible="true"
 							customData:p13nData='\{"leadingProperty":"ZWfUtente", "columnKey":"ZWfUtente", "additionalProperty": "ZDtStart,ZHhStart,ZWfText,ZDtStop,ZHhStop,ZWfProcid,ZWfTaskid,ZWfAzione"}'>
 							<Text text="Utente" id="nameColumnTitle1"/>
 						</Column>

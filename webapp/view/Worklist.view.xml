@@ -1,5 +1,9 @@
-<mvc:View controllerName="Workflow.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:footerbar="sap.ushell.ui.footerbar">
-	
+<mvc:View controllerName="Workflow.controller.Worklist" 
+xmlns="sap.m" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns:footerbar="sap.ushell.ui.footerbar"
+xmlns:html="http://www.w3.org/1999/xhtml">
+
 	<Page id="page" 
 	navButtonPress="onNavBack" 
 	showNavButton="true"
@@ -43,7 +47,7 @@
 			</IconTabBar>
 			<Table id="table" width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-				updateFinished="onUpdateFinished">
+				updateFinished="onUpdateFinished" backgroundDesign="Translucent">
 				<headerToolbar>
 					<Toolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
