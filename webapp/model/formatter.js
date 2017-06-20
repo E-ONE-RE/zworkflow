@@ -83,7 +83,7 @@ formatTime	: function(oTime) {
 			statusType: function(sIconId){
 				if(sIconId==1){
 			 return "Success";
-				} else if (sIconId==2) {
+				} else if (sIconId==2){
 			return "Warning";
 				}else{
 			return "Error";
