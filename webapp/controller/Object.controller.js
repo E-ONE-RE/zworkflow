@@ -54,13 +54,7 @@ sap.ui.define([
 		 * @public
 		 */
 
-          //Press the tile will make visible the table and the legend
-          onTilePress: function(){
-          	var oPanel = this.getView().byId("panel");
-          	if(oPanel.getVisible){
-          	oPanel.setVisible=false;}
-},
-	
+       
 
 		
 		
