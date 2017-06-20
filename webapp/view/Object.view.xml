@@ -4,12 +4,8 @@
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
 	
-			<StandardTile
-				title="To Task History"
-				info="Viasualize the task history"
-				 press = "onTilePress"/>
-
-		<content>
+		
+	<content>
 	<Panel id="panel" width="10rem" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 		<headerToolbar>
 			<Toolbar height="2rem">

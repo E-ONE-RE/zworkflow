@@ -97,8 +97,8 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						<ObjectIdentifier title="{ path: 'ZDtStart', formatter: '.formatter.formatDate' }"/>
 					</cells>
 					<cells>
-						<ObjectStatus icon="{ path: 'ZWfGiorni', formatter: '.formatter.iconType' }"
-							state="{path : 'ZWfGiorni', formatter: '.formatter.statusType' }"/>
+						<ObjectStatus icon="{ path: 'IconId', formatter: '.formatter.iconType' }"
+							state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
 					</cells>
 				</ColumnListItem>
 			</items>

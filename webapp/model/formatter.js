@@ -54,10 +54,10 @@ formatTime	: function(oTime) {
 },
 
 		
-	iconType: function(iDays) {
-				if(iDays<=5){
+	iconType: function(sIconId) {
+				if(sIconId==1){
 			 return "sap-icon://sys-enter-2";
-				} else if (iDays > 5 && iDays <= 10) {
+				} else if (sIconId==2) {
 			return "sap-icon://error";
 				}else{
 			return "sap-icon://alert";
@@ -80,10 +80,10 @@ formatTime	: function(oTime) {
 }	
  },
 			
-			statusType: function(iDays){
-				if(iDays<=5){
+			statusType: function(sIconId){
+				if(sIconId==1){
 			 return "Success";
-				} else if (iDays > 5 && iDays <= 10) {
+				} else if (sIconId==2) {
 			return "Warning";
 				}else{
 			return "Error";
