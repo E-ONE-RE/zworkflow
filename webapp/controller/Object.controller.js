@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"Workflow/model/formatter"
-], function(BaseController, JSONModel, History, formatter) {
+], function(BaseController, JSONModel, History, formatter, MessageToast, Button) {
 	"use strict";
 
 	return BaseController.extend("Workflow.controller.Object", {
@@ -40,9 +40,6 @@ sap.ui.define([
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 				oViewModel.setProperty("/busy", false);
 			});
-			    
-			   
-			
 		},
 
 		/* =========================================================== */
@@ -55,7 +52,7 @@ sap.ui.define([
 		 */
 
        
-
+    
 		
 		
 		onShareInJamPress: function() {
