@@ -169,7 +169,29 @@ sap.ui.define([
 				});
 			oShareDialog.open();
 		},
+		
+		/* codice di esempio da implementare per approvazione task da pulsante
+		<!--
+		onApproveTask: function() {
+			var aSelectedProducts, i, sPath, oProduct, oProductId;
 
+			aSelectedProducts = this.byId("table").getSelectedItems();
+			if (aSelectedProducts.length) {
+				for (i = 0; i < aSelectedProducts.length; i++) {
+					oProduct = aSelectedProducts[i];
+					oProductId = oProduct.getBindingContext().getProperty("ProductID");
+					sPath = oProduct.getBindingContextPath();
+					this.getModel().remove(sPath, {
+						success : this._handleUnlistActionResult.bind(this, oProductId, true, i+1, aSelectedProducts.length),
+						error : this._handleUnlistActionResult.bind(this, oProductId, false, i+1, aSelectedProducts.length)
+					});
+				}
+			} else {
+				this._showErrorMessage(this.getModel("i18n").getResourceBundle().getText("TableSelectProduct"));
+			}
+		},
+       */
+       
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */

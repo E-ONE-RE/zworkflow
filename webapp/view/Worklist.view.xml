@@ -22,7 +22,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						showAll="true"
 						icon= "sap-icon://database"
 						count="{i18n>worklistFilterTaskAllCount}"
-						text="Tutti i task"
+						text=""
 						/>
 					<IconTabSeparator/>
 					<IconTabFilter
@@ -30,22 +30,27 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						icon="sap-icon://sys-enter-2"
 						iconColor="Positive"
 						count="{worklistView>/lessUrgent}"
-						text="Non urgenti"/>
+						text="Not urgent"/>
 					<IconTabFilter
 						key="Urgent"
 						icon="sap-icon://alert"
 						iconColor="Critical"
 						count="{worklistView>/Urgent}"
-						text="Urgenti"/>
+						text="Urgent"/>
 					<IconTabFilter
 						key="moreUrgent"
 						icon="sap-icon://error"
 						iconColor="Negative"
 						count="{worklistView>/moreUrgent}"
-						text="Task critici"/>
+						text="Very urgent"/>
 				</items>
 			</IconTabBar>
-			<Table id="table" width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
+			<!-- (SE) multiselect per poter selezionare più righe 21062017-->
+			<Table id="table" 
+			
+			mode="MultiSelect"
+			
+			width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished="onUpdateFinished" backgroundDesign="Translucent">
 				<headerToolbar>
@@ -54,58 +59,105 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 					</Toolbar>
 				</headerToolbar>
 						<columns>
-				<Column id="nameColumn">
-				 	<Text text="Utente" id="nameColumnTitle"/>
-				</Column>
-				<Column id="nameColumn2">
-					<Text text="Task" id="nameColumnTitle2"/>
-				</Column>
-				<Column id="nameColumn3">
-					<Text text="Processo" id="nameColumnTitle3"/>
-				</Column>
-				<Column id="nameColumn4">
-					<Text text="Documento" id="nameColumnTitle4"/>
-				</Column>
-				<Column id="nameColumn5">
-					<Text text="Stato" id="nameColumnTitle5"/>
-				</Column>
-				<Column id="nameColumn6">
-					<Text text="Data inizio" id="nameColumnTitle6"/>
-				</Column>
-				<Column id="nameColumn7">
-					<Text text="Criticità" id="nameColumnTitle7"/>
-				</Column>
+						<Column id="docColumn">
+							<Text text="{i18n>tableDocColumnTitle}" id="docColumnTitle"/>
+						</Column>
+						
+						<Column id="userColumn"  demandPopin="false"
+		    						minScreenWidth="Tablet">
+						 	<Text text="{i18n>tableUserColumnTitle}" id="userColumnTitle"/>
+						</Column>
+						
+						<Column id="taskidColumn"  demandPopin="false"
+		    						minScreenWidth="Tablet">
+							<Text text="{i18n>tableTaskidColumnTitle}" id="taskidColumnTitle"/>
+						</Column>
+						
+						<Column id="procidColumn"  demandPopin="false"
+		    						minScreenWidth="Tablet">
+							<Text text="{i18n>tableProcidColumnTitle}" id="procidColumnTitle"/>
+						</Column>
+						
+						<!-- giorni in pending con colore  in base all'urgenza 
+						
+						<Column id="pendingColumn"  demandPopin="false"
+		    						minScreenWidth="Tablet">
+							<Text text="{i18n>tablePendingColumnTitle}" id="PendingColumnTitle"/>
+						</Column>
+						
+						-->
+						
+					    <Column id="statusColumn" demandPopin="true"
+		    						minScreenWidth="Tablet">
+								<Text text="{i18n>tableStatusColumnTitle}" id="StatusColumnTitle"/>
+						</Column>
+						
+						<Column id="startDateColumn">
+							<Text text="{i18n>tableStartDateColumnTitle}" id="StartDateColumnTitle"/>
+						</Column>
+							
+						<Column id="unitNumberColumn" hAlign="Right">
+						   <Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
+						</Column>
+						
+						<Column id="currencyColumn" hAlign="Left" demandPopin="false"
+		    						 minScreenWidth="Tablet">
+								<Text text="{i18n>tableCurrencyColumnTitle}" id="currencyColumnTitle"/>
+						</Column>
+					
 			</columns>
 			<items>
 				<ColumnListItem id="cli" type="Navigation" press="onPress">
-					<cells>
-						<ObjectIdentifier title="{ZWfUtente}"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ path: 'ZWfTaskid', formatter: '.formatter.formatPadding' }"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
-					</cells>
-					<cells>
+				<cells>
 						<ObjectIdentifier title="{ZWfDocument}"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ZWfGiorni}"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ path: 'ZDtStart', formatter: '.formatter.formatDate' }"/>
-					</cells>
-					<cells>
+							
+						<Text  text="{ZWfUtente}"/>
+					
+						<Text text="{ path: 'ZWfTaskid', formatter: '.formatter.formatPadding' }"/>
+				
+						<Text text="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
+						
+	                <!-- giorni in pending con colore  in base all'urgenza
+						<ObjectNumber
+								number="{IconId}"
+								state="{
+					               path: 'IconId',
+					               formatter: '.formatter.quantityState'}"
+					               />
+					-->
 						<ObjectStatus icon="{ path: 'IconId', formatter: '.formatter.iconType' }"
 							state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
-					</cells>
+
+					
+						<Text text="{ path: 'ZDtStart', formatter: '.formatter.formatDate' }"/>
+				
+						<ObjectNumber
+								number="{
+									path: 'ZWfValoreDocumento',
+									formatter: '.formatter.numberUnit'
+								}"/>
+						
+						<Text text="{ZWfValuta}"/>
+								
+					</cells>			
 				</ColumnListItem>
 			</items>
 			</Table>
 		</content>
 		<footer>
 			<OverflowToolbar id="footerToolbar">
+				<ToolbarSpacer/>
+				
+			<!--	
+				<Button type="Accept" text="Approve" press="onApproveTask">
+				   <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				   </Button>
+				   <Button type="Reject" text="Reject" press="onRejectTask">
+				   <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				   </Button>
+			-->		   
+				    
+	<!--			
 				<ToolbarSpacer/>
 				<Button id="shareButton" tooltip="{i18n>shareTooltip}" icon="sap-icon://action" press="onSharePress">
 					<dependents>
@@ -118,6 +170,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						</ActionSheet>
 					</dependents>
 				</Button>
+	-->			
 			</OverflowToolbar>
 		</footer>
 	</Page>
