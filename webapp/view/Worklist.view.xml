@@ -148,14 +148,14 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 			<OverflowToolbar id="footerToolbar">
 				<ToolbarSpacer/>
 				
-			<!--	
+				
 				<Button type="Accept" text="Approve" press="onApproveTask">
-				   <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
-				   </Button>
-				   <Button type="Reject" text="Reject" press="onRejectTask">
-				   <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
-				   </Button>
-			-->		   
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				  </Button>
+				  <Button type="Reject" text="Reject" press="onRejectTask">
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				</Button>
+					   
 				    
 	<!--			
 				<ToolbarSpacer/>
