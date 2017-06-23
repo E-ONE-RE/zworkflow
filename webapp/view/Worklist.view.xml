@@ -68,15 +68,17 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						 	<Text text="{i18n>tableUserColumnTitle}" id="userColumnTitle"/>
 						</Column>
 						
+						<Column id="procidColumn"  demandPopin="false"
+		    						minScreenWidth="Tablet">
+							<Text text="{i18n>tableProcidColumnTitle}" id="procidColumnTitle"/>
+						</Column>
+						
 						<Column id="taskidColumn"  demandPopin="false"
 		    						minScreenWidth="Tablet">
 							<Text text="{i18n>tableTaskidColumnTitle}" id="taskidColumnTitle"/>
 						</Column>
 						
-						<Column id="procidColumn"  demandPopin="false"
-		    						minScreenWidth="Tablet">
-							<Text text="{i18n>tableProcidColumnTitle}" id="procidColumnTitle"/>
-						</Column>
+						
 						
 						<!-- giorni in pending con colore  in base all'urgenza 
 						
@@ -112,10 +114,11 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						<ObjectIdentifier title="{ZWfDocument}"/>
 							
 						<Text  text="{ZWfUtente}"/>
+						
+						<Text text="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
 					
 						<Text text="{ path: 'ZWfTaskid', formatter: '.formatter.formatPadding' }"/>
 				
-						<Text text="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
 						
 	                <!-- giorni in pending con colore  in base all'urgenza
 						<ObjectNumber
