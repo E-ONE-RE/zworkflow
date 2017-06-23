@@ -7,7 +7,7 @@
 		<html:style>
 			#application-zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
 			#application-zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td{ border-top: 1pt solid rgba(40, 105,
-			227, 0.6); !important; } #application-zworkflow-display-component---object--Table2-listUl,
+			227, 0.6); !important; }#application-zworkflow-display-component---object--Table2-listUl,
 			#application-zworkflow-display-component---object--Table3-listUl {border: 1px solid rgba(40, 105, 227, 0.6);}
 			td[aria-describedby=application-zworkflow-display-component---object--nameColumnTitle9] { font-style: italic; !important; }
 			#application-zworkflow-display-component---object--iconTab2--header-head{ display: table; !important; margin: 0 auto; !important; }
