@@ -1,189 +1,194 @@
 <mvc:View controllerName="Workflow.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
 	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:smartTable="sap.ui.comp.smarttable"
-	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:sap.ui.core="sap.ui.core"
-	xmlns:l="sap.ui.layout">
+	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:sap.ui.core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
-				
-				
-				
-
-	
-	<content>
-			<Panel id="panel" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
-				<headerToolbar>
-					<Toolbar height="2rem">
-						<Title text="Task History"/>
-						<ToolbarSpacer/>
-					</Toolbar>
-				</headerToolbar>
-				<content>
-					<ObjectStatus icon="sap-icon://employee-approvals" text="Approved"></ObjectStatus>
-					<ObjectStatus icon="sap-icon://employee-rejections" text="Rejected"></ObjectStatus>
-					<ObjectStatus icon="sap-icon://initiative" text="Moved"></ObjectStatus>
-					<ObjectStatus icon="sap-icon://pending" text="Pending"></ObjectStatus>
-				</content>
-				<smartTable:SmartTable id="ST_storico" entitySet="TaskHstSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
-				header="Task History" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToHst"
-				class="sapUiResponsiveContentPadding">
-				<Table id="Table2" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
-					<columns>
-						<Column id="C1" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfUtente", "columnKey":"ZWfUtente"}'>
-							<Text text="Utente" id="nameColumnTitle1"/>
-						</Column>
-						<Column id="C2" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZDtStart", "columnKey":"ZDtStart"}'>
-							<Text text="Data Inizio" id="nameColumnTitle2"/>
-						</Column>
-						<Column id="C3" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZHhStart", "columnKey":"ZHhStart"}'>
-							<Text text="Ora inizio" id="nameColumnTitle3"/>
-						</Column>
-						<Column id="C4" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfText", "columnKey":"ZWfText"}'>
-							<Text text="Descrizione attività" id="nameColumnTitle4"/>
-						</Column>
-						<Column id="C5" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZDtStop", "columnKey":"ZDtStop"}'>
-							<Text text="Data fine" id="nameColumnTitle5"/>
-						</Column>
-						<Column id="C6" width="auto" minScreenWidth="Tablet" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZHhStop", "columnKey":"ZHhStop"}'>
-							<Text text="Ora fine" id="nameColumnTitle6"/>
-						</Column>
-						<Column id="C7" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfProcid", "columnKey":"ZWfProcid"}'>
-							<Text text="Id Processo" id="nameColumnTitle7"/>
-						</Column>
-						<Column id="C8" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfTaskid", "columnKey":"ZWfTaskid"}'>
-							<Text text="Id Task" id="nameColumnTitle8"/>
-						</Column>
-						<Column id="C9" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfAzione", "columnKey":"ZWfAzione"}'>
-							<Text text="Azione" id="nameColumnTitle9"/>
-						</Column>
-					</columns>
-					<items>
-						<ColumnListItem type="inactive">
-							<cells>
-								<ObjectIdentifier title="{ZWfUtente}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{path: 'ZDtStart', formatter: '.formatter.formatDate'}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{path: 'ZHhStart', formatter: '.formatter.formatTime'}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfText}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{path: 'ZDtStop', formatter: '.formatter.formatDate'}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{path: 'ZHhStop', formatter: '.formatter.formatTime'}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfProcid}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfTaskid}"/>
-							</cells>
-							<cells>
-								<ObjectStatus icon="{ path: 'ZWfAzione', formatter: '.formatter.iconAction' }"></ObjectStatus>
-								<ObjectIdentifier title="{path: 'ZWfAzione', formatter:'.formatter.iconAction'}"/>
-							</cells>
-						</ColumnListItem>
-					</items>
-				</Table>
-				<smartTable:layoutData>
-					<FlexItemData growFactor="1" baseSize="0%"/>
-				</smartTable:layoutData>
-			</smartTable:SmartTable>
-			</Panel>
-			
-			
-			<Panel id="panel2" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
-				<headerToolbar>
-					<Toolbar height="2rem">
-						<Title text="Process Steps"/>
-						<ToolbarSpacer/>
-					</Toolbar>
-				</headerToolbar>
-				<smartTable:SmartTable id="Processo" entitySet="ProcSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
-				header="Process Steps" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToProcess"
-				class="sapUiResponsiveContentPadding">
-				<Table id="Table3" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
-					<columns>
-						<Column id="col1" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfStep", "columnKey":"ZWfStep"}'>
-							<Text text="Step" id="nameC1"/>
-						</Column>
-						<Column id="col2" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfSubop", "columnKey":"ZWfSubop"}'>
-							<Text text="Sub operation" id="nameC2"/>
-						</Column>
-						<Column id="col3" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfUser", "columnKey":"ZWfUser"}'>
-							<Text text="User" id="nameC3"/>
-						</Column>
-						<Column id="col4" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfText", "columnKey":"ZWfText"}'>
-							<Text text="Activity Description" id="nameC4"/>
-						</Column>
-						<Column id="col5" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfStepOk", "columnKey":"ZWfStepOk"}'>
-							<Text text="Next Step" id="nameC5"/>
-						</Column>
-						<Column id="col6" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfStepKo", "columnKey":"ZWfStepKo"}'>
-							<Text text="Previous Step" id="nameC6"/>
-						</Column>
-						<Column id="col7" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
-							customData:p13nData='\{"leadingProperty":"ZWfSkip", "columnKey":"ZWfSkip"}'>
-							<Text text="Skip" id="nameC7"/>
-						</Column>
-					</columns>
-					<items>
-						<ColumnListItem type="inactive">
-							<cells>
-								<ObjectIdentifier title="{ZWfStep}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfSubop}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfUser}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfText}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfStepOk}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfStepKo}"/>
-							</cells>
-							<cells>
-								<ObjectIdentifier title="{ZWfSkip}"/>
-							</cells>
-						</ColumnListItem>
-					</items>
-				</Table>
-				<smartTable:layoutData>
-					<FlexItemData growFactor="1" baseSize="0%"/>
-				</smartTable:layoutData>
-			</smartTable:SmartTable>
-			</Panel>
-			
-		</content>
-				
-	
-		
-		
+		<html:style>
+			#application-zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
+			#application-zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td{ border-top: 1pt solid rgba(40, 105,
+			227, 0.6); !important; } #application-zworkflow-display-component---object--Table2-listUl,
+			#application-zworkflow-display-component---object--Table3-listUl {border: 1px solid rgba(40, 105, 227, 0.6);}
+			td[aria-describedby=application-zworkflow-display-component---object--nameColumnTitle9] { font-style: italic; !important; }
+			#application-zworkflow-display-component---object--iconTab2--header-head{ display: table; !important; margin: 0 auto; !important; }
+		</html:style>
+		<ObjectHeader responsive="true" intro="Currently running for user {ZWfUtente} in process {ZWfProcid}" title="Task {ZWfTaskid}"
+			backgroundDesign="Translucent">
+			<attributes>
+				<ObjectAttribute title="Process" text="{ZWfText}"/>
+				<ObjectAttribute title="Document" text="{ZWfDocument}"/>
+			</attributes>
+			<statuses>
+				<ObjectStatus title="Status" text="{path : 'IconId', formatter: '.formatter.statusText'}"
+					state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
+			</statuses>
+		</ObjectHeader>
+		<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false">
+			<items>
+				<IconTabFilter icon="sap-icon://hint" text="Informations">
+					<content>
+						<Panel id="panel" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
+							<headerToolbar>
+								<Toolbar height="auto">
+									<Title text="Task History"/>
+								</Toolbar>
+							</headerToolbar>
+							<smartTable:SmartTable id="ST_storico" entitySet="TaskHstSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+								header="Task History" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToHst"
+								class="sapUiResponsiveContentPadding">
+								<Table id="Table2" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+									<columns>
+										<Column id="C1" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfUtente", "columnKey":"ZWfUtente"}' class="myStyle">
+											<Text text="Utente" id="nameColumnTitle1"/>
+										</Column>
+										<Column id="C2" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZDtStart", "columnKey":"ZDtStart"}'>
+											<Text text="Data Inizio" id="nameColumnTitle2"/>
+										</Column>
+										<Column id="C3" width="auto" minScreenWidth="tablet" demandPopin="false" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZHhStart", "columnKey":"ZHhStart"}'>
+											<Text text="Ora inizio" id="nameColumnTitle3"/>
+										</Column>
+										<Column id="C4" width="auto" minScreenWidth="tablet" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfText", "columnKey":"ZWfText"}'>
+											<Text text="Descrizione attività" id="nameColumnTitle4"/>
+										</Column>
+										<Column id="C5" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZDtStop", "columnKey":"ZDtStop"}'>
+											<Text text="Data fine" id="nameColumnTitle5"/>
+										</Column>
+										<Column id="C6" width="auto" minScreenWidth="Tablet" demandPopin="false" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZHhStop", "columnKey":"ZHhStop"}'>
+											<Text text="Ora fine" id="nameColumnTitle6"/>
+										</Column>
+										<Column id="C7" width="auto" minScreenWidth="tablet" demandPopin="false" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfProcid", "columnKey":"ZWfProcid"}'>
+											<Text text="Id Processo" id="nameColumnTitle7"/>
+										</Column>
+										<Column id="C8" width="auto" minScreenWidth="tablet" demandPopin="false" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfTaskid", "columnKey":"ZWfTaskid"}'>
+											<Text text="Id Task" id="nameColumnTitle8"/>
+										</Column>
+										<Column id="C9" width="auto" minScreenWidth="phone" demandPopin="false" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfAzione", "columnKey":"ZWfAzione"}'>
+											<Text text="Azione" id="nameColumnTitle9"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem type="inactive">
+											<cells>
+												<ObjectIdentifier title="{ZWfUtente}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{path: 'ZDtStart', formatter: '.formatter.formatDate'}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{path: 'ZHhStart', formatter: '.formatter.formatTime'}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfText}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{path: 'ZDtStop', formatter: '.formatter.formatDate'}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{path: 'ZHhStop', formatter: '.formatter.formatTime'}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfProcid}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfTaskid}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{path: 'ZWfAzione', formatter:'.formatter.iconAction'}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+								<smartTable:layoutData>
+									<FlexItemData growFactor="1" baseSize="0%"/>
+								</smartTable:layoutData>
+							</smartTable:SmartTable>
+						</Panel>
+						<Panel id="panel2" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
+							<headerToolbar>
+								<Toolbar height="auto">
+									<Title text="Process Steps"/>
+								</Toolbar>
+							</headerToolbar>
+							<smartTable:SmartTable id="Processo" entitySet="ProcSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+								header="Process Steps" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToProcess"
+								class="sapUiResponsiveContentPadding">
+								<Table id="Table3" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+									<columns>
+										<Column id="col1" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfStep", "columnKey":"ZWfStep"}'>
+											<Text text="Step" id="nameC1"/>
+										</Column>
+										<Column id="col2" width="auto" minScreenWidth="tablet" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfSubop", "columnKey":"ZWfSubop"}'>
+											<Text text="Sub operation" id="nameC2"/>
+										</Column>
+										<Column id="col3" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfUser", "columnKey":"ZWfUser"}'>
+											<Text text="User" id="nameC3"/>
+										</Column>
+										<Column id="col4" width="auto" minScreenWidth="tablet" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfText", "columnKey":"ZWfText"}'>
+											<Text text="Activity Description" id="nameC4"/>
+										</Column>
+										<Column id="col5" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfStepOk", "columnKey":"ZWfStepOk"}'>
+											<Text text="Next Step" id="nameC5"/>
+										</Column>
+										<Column id="col6" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfStepKo", "columnKey":"ZWfStepKo"}'>
+											<Text text="Previous Step" id="nameC6"/>
+										</Column>
+										<Column id="col7" width="auto" minScreenWidth="tablet" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"ZWfSkip", "columnKey":"ZWfSkip"}'>
+											<Text text="Skip" id="nameC7"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem type="inactive">
+											<cells>
+												<ObjectIdentifier title="{ZWfStep}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfSubop}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfUser}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfText}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfStepOk}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfStepKo}"/>
+											</cells>
+											<cells>
+												<ObjectIdentifier title="{ZWfSkip}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+								<smartTable:layoutData>
+									<FlexItemData growFactor="1" baseSize="0%"/>
+								</smartTable:layoutData>
+							</smartTable:SmartTable>
+						</Panel>
+					</content>
+				</IconTabFilter>
+				<IconTabFilter icon="sap-icon://attachment" text="Attachments"></IconTabFilter>
+				<IconTabFilter icon="sap-icon://documents" text="Documents"></IconTabFilter>
+			</items>
+		</IconTabBar>
 		<footer>
 			<OverflowToolbar id="footerToolbar">
 				<ToolbarSpacer/>

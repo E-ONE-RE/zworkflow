@@ -1,50 +1,25 @@
-<mvc:View controllerName="Workflow.controller.Worklist" 
-xmlns="sap.m" 
-xmlns:mvc="sap.ui.core.mvc" 
-xmlns:footerbar="sap.ushell.ui.footerbar"
-xmlns:html="http://www.w3.org/1999/xhtml">
-
-	<Page id="page" 
-	navButtonPress="onNavBack" 
-	showNavButton="true"
-	title="{i18n>worklistViewTitle}"
-	floatingFooter="true">
+<mvc:View controllerName="Workflow.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:footerbar="sap.ushell.ui.footerbar"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="page" navButtonPress="onNavBack" showNavButton="true" title="{i18n>worklistViewTitle}" floatingFooter="true">
+		
+		
 		<content>
-			<IconTabBar
-				id="iconTab"
-				expandable="false"
-			select="onQuickFilter"
-			backgroundDesign="Translucent"
-			applyContentPadding="false">
+			<IconTabBar id="iconTab" expandable="false" select="onQuickFilter" backgroundDesign="Translucent" applyContentPadding="false">
 				<items>
-					<IconTabFilter
-						key="all"
-						showAll="true"
-						icon= "sap-icon://database"
-						count="{i18n>worklistFilterTaskAllCount}"
-						text="Tutti i task"
-						/>
+					<IconTabFilter key="all" showAll="true" icon="sap-icon://database" count="{i18n>worklistFilterTaskAllCount}" text="Tutti i task"/>
 					<IconTabSeparator/>
-					<IconTabFilter
-						key="lessUrgent"
-						icon="sap-icon://sys-enter-2"
-						iconColor="Positive"
-						count="{worklistView>/lessUrgent}"
-						text="Non urgenti"/>
-					<IconTabFilter
-						key="Urgent"
-						icon="sap-icon://alert"
-						iconColor="Critical"
-						count="{worklistView>/Urgent}"
-						text="Urgenti"/>
-					<IconTabFilter
-						key="moreUrgent"
-						icon="sap-icon://error"
-						iconColor="Negative"
-						count="{worklistView>/moreUrgent}"
-						text="Task critici"/>
+					<IconTabFilter key="lessUrgent" icon="sap-icon://sys-enter-2" iconColor="Positive" count="{worklistView>/lessUrgent}" text="Non urgenti"/>
+					<IconTabFilter key="Urgent" icon="sap-icon://alert" iconColor="Critical" count="{worklistView>/Urgent}" text="Urgenti"/>
+					<IconTabFilter key="moreUrgent" icon="sap-icon://error" iconColor="Negative" count="{worklistView>/moreUrgent}" text="Task critici"/>
 				</items>
 			</IconTabBar>
+			<!--
+				<Bar>
+					<contentRight>
+						<SearchField search="onSearch" placeholder="Insert a task ID"/>
+					</contentRight>
+				</Bar>
+				!-->
 			<Table id="table" width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished="onUpdateFinished" backgroundDesign="Translucent">
@@ -53,55 +28,54 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
 					</Toolbar>
 				</headerToolbar>
-						<columns>
-				<Column id="nameColumn">
-				 	<Text text="Utente" id="nameColumnTitle"/>
-				</Column>
-				<Column id="nameColumn2">
-					<Text text="Task" id="nameColumnTitle2"/>
-				</Column>
-				<Column id="nameColumn3">
-					<Text text="Processo" id="nameColumnTitle3"/>
-				</Column>
-				<Column id="nameColumn4">
-					<Text text="Documento" id="nameColumnTitle4"/>
-				</Column>
-				<Column id="nameColumn5">
-					<Text text="Stato" id="nameColumnTitle5"/>
-				</Column>
-				<Column id="nameColumn6">
-					<Text text="Data inizio" id="nameColumnTitle6"/>
-				</Column>
-				<Column id="nameColumn7">
-					<Text text="Criticità" id="nameColumnTitle7"/>
-				</Column>
-			</columns>
-			<items>
-				<ColumnListItem id="cli" type="Navigation" press="onPress">
-					<cells>
-						<ObjectIdentifier title="{ZWfUtente}"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ path: 'ZWfTaskid', formatter: '.formatter.formatPadding' }"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ZWfDocument}"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ZWfGiorni}"/>
-					</cells>
-					<cells>
-						<ObjectIdentifier title="{ path: 'ZDtStart', formatter: '.formatter.formatDate' }"/>
-					</cells>
-					<cells>
-						<ObjectStatus icon="{ path: 'IconId', formatter: '.formatter.iconType' }"
-							state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
-					</cells>
-				</ColumnListItem>
-			</items>
+				<columns>
+					<Column id="nameColumn">
+						<Text text="Utente" id="nameColumnTitle"/>
+					</Column>
+					<Column id="nameColumn2">
+						<Text text="Task" id="nameColumnTitle2"/>
+					</Column>
+					<Column id="nameColumn3">
+						<Text text="Processo" id="nameColumnTitle3"/>
+					</Column>
+					<Column id="nameColumn4">
+						<Text text="Documento" id="nameColumnTitle4"/>
+					</Column>
+					<Column id="nameColumn5">
+						<Text text="Stato" id="nameColumnTitle5"/>
+					</Column>
+					<Column id="nameColumn6">
+						<Text text="Data inizio" id="nameColumnTitle6"/>
+					</Column>
+					<Column id="nameColumn7">
+						<Text text="Criticità" id="nameColumnTitle7"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem id="cli" type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier title="{ZWfUtente}"/>
+						</cells>
+						<cells>
+							<ObjectIdentifier title="{ path: 'ZWfTaskid', formatter: '.formatter.formatPadding' }"/>
+						</cells>
+						<cells>
+							<ObjectIdentifier title="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
+						</cells>
+						<cells>
+							<ObjectIdentifier title="{ZWfDocument}"/>
+						</cells>
+						<cells>
+							<ObjectIdentifier title="{ZWfGiorni}"/>
+						</cells>
+						<cells>
+							<ObjectIdentifier title="{ path: 'ZDtStart', formatter: '.formatter.formatDate' }"/>
+						</cells>
+						<cells>
+							<ObjectStatus icon="{ path: 'IconId', formatter: '.formatter.iconType' }" state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
+						</cells>
+					</ColumnListItem>
+				</items>
 			</Table>
 		</content>
 		<footer>

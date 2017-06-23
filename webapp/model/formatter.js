@@ -67,16 +67,16 @@ formatTime	: function(oTime) {
  iconAction: function(sAction) {
      switch(sAction) {
     case "OK":
-       return "sap-icon://employee-approvals";
+       return "Approved";
         break;
     case "KO":
-        return "sap-icon://employee-rejections";
+        return "Rejected";
         break;
     case "MOVE":
-        return "sap-icon://initiative";
+        return "Moved";
         break;
     default:
-       return  "sap-icon://pending";
+       return  "Pending";
 }	
  },
 			
@@ -88,8 +88,27 @@ formatTime	: function(oTime) {
 				}else{
 			return "Error";
 				}
+			},
+				statusText: function(sIconId){
+				if(sIconId==1){
+			 return "Not Urgent";
+				} else if (sIconId==2){
+			return "Urgent";
+				}else{
+			return "Critical";
+				}
 			}
 
 	};
+	
 
-});
+
+	
+
+}
+
+
+
+
+
+);
