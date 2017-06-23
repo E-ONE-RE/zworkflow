@@ -1,11 +1,10 @@
-sap.ui.define([], function() {
+sap.ui.define([
+		"sap/ui/core/ValueState"
+		], function(ValueState) {
 	"use strict";
 
-  
 	return {
 
-
-	       
 		/**
 		 * Rounds the number unit value to 2 digits
 		 * @public
@@ -19,7 +18,7 @@ sap.ui.define([], function() {
 			return parseFloat(sValue).toFixed(2);
 		},
 
-	formatPadding: function(sId){
+	    formatPadding: function(sId){
 			return String(sId).substring(0, 10);                        
 		},
 		/**
@@ -46,41 +45,41 @@ sap.ui.define([], function() {
 		
 		
 
-formatTime	: function(oTime) {                                                            
-	var oTimeFormat = sap.ui.core.format.DateFormat.getTimeInstance({pattern: "HH:mm:ss"});
-	var TZOffsetMs = new Date(0).getTimezoneOffset()*60*1000;                             
-	var timeStr = oTimeFormat.format(new Date(oTime.ms + TZOffsetMs));                      
-	return timeStr;                                                                       
-},
+		formatTime	: function(oTime) {                                                            
+			var oTimeFormat = sap.ui.core.format.DateFormat.getTimeInstance({pattern: "HH:mm:ss"});
+			var TZOffsetMs = new Date(0).getTimezoneOffset()*60*1000;                             
+			var timeStr = oTimeFormat.format(new Date(oTime.ms + TZOffsetMs));                      
+			return timeStr;                                                                       
+		},
 
 		
-	iconType: function(sIconId) {
-				if(sIconId==1){
-			 return "sap-icon://sys-enter-2";
-				} else if (sIconId==2) {
-			return "sap-icon://error";
-				}else{
-			return "sap-icon://alert";
-				}
-			},
+		iconType: function(sIconId) {
+					if(sIconId==1){
+				 return "sap-icon://sys-enter-2";
+					} else if (sIconId==2) {
+				return "sap-icon://error";
+					}else{
+				return "sap-icon://alert";
+					}
+				},
 			
- iconAction: function(sAction) {
-     switch(sAction) {
-    case "OK":
-       return "sap-icon://employee-approvals";
-        break;
-    case "KO":
-        return "sap-icon://employee-rejections";
-        break;
-    case "MOVE":
-        return "sap-icon://initiative";
-        break;
-    default:
-       return  "sap-icon://pending";
-}	
- },
+	   iconAction: function(sAction) {
+				     switch(sAction) {
+				    case "OK":
+				       return "sap-icon://employee-approvals";
+				        break;
+				    case "KO":
+				        return "sap-icon://employee-rejections";
+				        break;
+				    case "MOVE":
+				        return "sap-icon://initiative";
+				        break;
+				    default:
+				       return  "sap-icon://pending";
+				}	
+				 },
 			
-			statusType: function(sIconId){
+		statusType: function(sIconId){
 				if(sIconId==1){
 			 return "Success";
 				} else if (sIconId==2){
@@ -88,7 +87,17 @@ formatTime	: function(oTime) {
 				}else{
 			return "Error";
 				}
+			},
+			
+		quantityState: function(sIconId) {
+				if(sIconId==3){
+				return ValueState.Error;
+			} else if (sIconId==2){
+				return ValueState.Warning;
+			} else {
+				return ValueState.Success;
 			}
+		}
 
 	};
 

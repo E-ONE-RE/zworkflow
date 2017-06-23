@@ -59,7 +59,7 @@ sap.ui.define([
 		this.oDeviceModel = models.createDeviceModel();
 
 		// Assert
-		assert.strictEqual(this.oDeviceModel.getDefaultBindingMode(), "OneWay", "Binding mode is correct");
+		assert.strictEqual(this.oDeviceModel.getDefaultBindingMode(), "TwoWay", "Binding mode is correct");
 	});
 
 	QUnit.module("createODataModel", {
