@@ -1,0 +1,90 @@
+{
+  "run": [
+    {
+<<<<<<< HEAD
+      "filePath": "/webapp/test/testFLP.html",
+=======
+      "filePath": "/zworkflow/webapp/test/testFLP.html",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "urlParameters": [
+        {
+          "paramName": "",
+          "paramValue": "",
+          "paramActive": false
+        },
+        {
+          "paramName": "",
+          "paramValue": "",
+          "paramActive": false
+        }
+      ],
+      "hashParameter": "zworkflow-display",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 1,
+      "_metadata": {
+        "id": 1978925,
+        "runnerId": "webapprunner",
+        "displayName": "Run with Server",
+        "lastRunTimeStamp": 1498225346599
+      }
+    },
+    {
+      "filePath": "/zworkflow/webapp/Component.js",
+>>>>>>> 48edbf7cfe159c279a81e3227b1c74700bfb7482
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [],
+      "hashParameter": "",
+      "backendSystem": [],
+      "_metadata": {
+        "runnerId": "webapprunner",
+        "id": 4788344,
+        "displayName": "Run testFLP.html",
+        "lastRunTimeStamp": 1498549576510
+      }
+    },
+    {
+      "filePath": "/webapp/test/testFLPService.html",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [],
+      "hashParameter": "",
+      "backendSystem": [],
+      "_metadata": {
+        "runnerId": "webapprunner",
+        "id": 9975770,
+        "displayName": "Run testFLPService.html",
+        "lastRunTimeStamp": 1498228351858
+      }
+    },
+    {
+      "filePath": "/webapp/test/test.html",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [],
+      "hashParameter": "",
+      "backendSystem": [],
+      "_metadata": {
+        "runnerId": "webapprunner",
+        "id": 5185283,
+        "displayName": "Run test.html",
+        "lastRunTimeStamp": 1498228041770
+      }
+    }
+  ]
+}

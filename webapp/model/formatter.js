@@ -89,17 +89,6 @@ sap.ui.define([
 				}
 			},
 			
-							statusText: function(sIconId){
-				if(sIconId==1){
-			 return "Not Urgent";
-				} else if (sIconId==2){
-			return "Urgent";
-				}else{
-			return "Critical";
-				}
-
-			},
-			
 		quantityState: function(sIconId) {
 				if(sIconId==3){
 				return ValueState.Error;
