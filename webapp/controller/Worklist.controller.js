@@ -90,9 +90,24 @@ sap.ui.define([
 					oBinding.filter([]);	
 				}
 			},
-			
-			
-			
+
+//Filtro da implementare su SEGW se vogliamo mettere il SearchField
+/*
+	    //Search Bar
+	    onSearch: function(oEvent){
+	     var aFilters = [];
+    var sQuery = oEvent.getSource().getValue();
+     if (sQuery && sQuery.length > 0) {       //here name is the field on which the filter has to be done.
+      var filter = new sap.ui.model.Filter("ZWfTaskid", sap.ui.model.FilterOperator.Contains, sQuery);
+      aFilters.push(filter);
+     	
+     }
+     // update list binding
+     var list = this.getView().byId("worklistView");
+    var binding = list.getBinding("items");
+     binding.filter(aFilters);
+     },
+*/			
 		onUpdateFinished: function(oEvent) {
 			// update the worklist's object counter after the table update
 			var sTitle,

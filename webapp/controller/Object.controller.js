@@ -32,8 +32,8 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-		
-			
+		    
+		   
 			this.setModel(oViewModel, "objectView");
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
 				// Restore original busy indicator delay for the object view
@@ -50,12 +50,9 @@ sap.ui.define([
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
 		 */
-
-       
     
-		
-		
-		onShareInJamPress: function() {
+
+   		onShareInJamPress: function() {
 			var oViewModel = this.getModel("objectView"),
 				oShareDialog = sap.ui.getCore().createComponent({
 					name: "sap.collaboration.components.fiori.sharing.dialog",
@@ -111,6 +108,10 @@ sap.ui.define([
 			}.bind(this));
 		
 		},
+		
+		//Color for the tables
+		
+	
 
 		/**
 		 * Binds the view to the object path.

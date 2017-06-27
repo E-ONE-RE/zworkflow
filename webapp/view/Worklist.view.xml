@@ -1,22 +1,12 @@
-<mvc:View controllerName="Workflow.controller.Worklist" 
-xmlns="sap.m" 
-xmlns:mvc="sap.ui.core.mvc" 
-xmlns:footerbar="sap.ushell.ui.footerbar"
-xmlns:html="http://www.w3.org/1999/xhtml">
-
-	<Page id="page" 
-	navButtonPress="onNavBack" 
-	showNavButton="true"
-	title="{i18n>worklistViewTitle}"
-	floatingFooter="true">
+<mvc:View controllerName="Workflow.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:footerbar="sap.ushell.ui.footerbar"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="page" navButtonPress="onNavBack" showNavButton="true" title="{i18n>worklistViewTitle}" floatingFooter="true">
+		
+		
 		<content>
-			<IconTabBar
-				id="iconTab"
-				expandable="false"
-			select="onQuickFilter"
-			backgroundDesign="Translucent"
-			applyContentPadding="false">
+			<IconTabBar id="iconTab" expandable="false" select="onQuickFilter" backgroundDesign="Translucent" applyContentPadding="false">
 				<items>
+
 					<IconTabFilter
 						key="all"
 						showAll="true"
@@ -51,6 +41,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 			mode="MultiSelect"
 			
 			width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
+
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished="onUpdateFinished" backgroundDesign="Translucent">
 				<headerToolbar>
@@ -58,6 +49,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
 					</Toolbar>
 				</headerToolbar>
+
 						<columns>
 						<Column id="docColumn">
 							<Text text="{i18n>tableDocColumnTitle}" id="docColumnTitle"/>
@@ -145,6 +137,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 					</cells>			
 				</ColumnListItem>
 			</items>
+
 			</Table>
 		</content>
 		<footer>
