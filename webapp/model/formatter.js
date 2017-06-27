@@ -88,6 +88,7 @@ sap.ui.define([
 			return "Error";
 				}
 			},
+<<<<<<< HEAD
 			
 		quantityState: function(sIconId) {
 				if(sIconId==3){
