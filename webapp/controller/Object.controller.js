@@ -50,7 +50,6 @@ sap.ui.define([
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
 		 */
-<<<<<<< HEAD
 		/*onApproveTask: function() {
 			var aSelectedTaskid,  i, sPath, oTask, oTaskId;
 			aSelectedTaskid = this.byId("table").getSelectedItems();
@@ -266,8 +265,7 @@ OData.request
 			}
 		},
        */
-=======
->>>>>>> 48edbf7cfe159c279a81e3227b1c74700bfb7482
+
     
 
    		onShareInJamPress: function() {
