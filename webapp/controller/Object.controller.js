@@ -50,8 +50,221 @@ sap.ui.define([
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
 		 */
+		/*onApproveTask: function() {
+			var aSelectedTaskid,  i, sPath, oTask, oTaskId;
+			aSelectedTaskid = this.byId("table").getSelectedItems();
+			if (aSelectedTaskid.length) {
+				for (i = 0; i < aSelectedTaskid.length; i++) {
+					oTask = aSelectedTaskid[i];
+					oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
+					sPath = oTask.getBindingContextPath();
+					this.getModel().remove(sPath, {
+						success : this._handleUnlistActionResult.bind(this, oTaskId, true, i+1, aSelectedTaskid.length),
+						error : this._handleUnlistActionResult.bind(this, oTaskId, false, i+1, aSelectedTaskid.length)
+					});
+				}
+			} else {
+				this._showErrorMessage(this.getModel("i18n").getResourceBundle().getText("TableSelectProduct"));
+			}
+		},*/
+		
+		/*
+			onApproveTask: function() {
+		
+OData.request
+({
+ requestUri: "http://gwserver:8000/sap/opu/odata/sap/Z_UI5_USER_MAINT_CM/z_ui5_user_maintCollection('AGAMPA')",
+ method: "GET",
+ headers:
+ {     
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/atom+xml",
+                        "DataServiceVersion": "2.0",        
+                        "X-CSRF-Token":"Fetch"    
+ } 
+	
+}
+);
+			}, 	*/
 
-       
+/*function fnS(){
+  alert("ok in read");
+  }
+function fnE(oError){
+         alert("Error in read");
+  }
+			},
+  */
+/////////////////////////////////////////////////////////////////////  
+		onApproveTask: function() 
+	{
+		var sSelectedTaskid,  i, sPath, oTask, oTaskId, oView;
+            oView=this;
+// al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
+//una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
+// che richiedono la scelta di un nuovo processo da far partire
+
+            //trovo il task id andando a vedere il routing path ricavando la stringa con substring e indexOf
+			sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
+			//////////////////////////////////////////
+			
+			//if (aSelectedTaskid.length) 
+			//{
+				//for (i = 0; i < aSelectedTaskid.length; i++) 
+				//{
+					//oTask = aSelectedTaskid[i];
+					
+					
+		    ///////////////////////////////////////////
+					// recupero il taskid selezionato
+					//oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
+					 var oUrlParams = {
+				//	 ZWfTaskid : "0000025447",
+				     ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
+					  ZWfActionType : "OK"
+					  };
+					  //var oView = this.getView();
+					  //oModel = this.getModel(),
+					  var oModel = this.getModel();
+					  // lancio la function import creata sull'odata
+					  oModel.callFunction("/ZWfAction", {
+					  method:"POST",
+					  urlParameters: oUrlParams,
+					  success: fnS,
+					  error: fnE });
+					  
+					   
+				//}
+			//}	
+				   function fnS(oData, response) 
+				   {
+				   	console.log(oData); console.log(response);
+				   	
+				   	// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
+				   	if (oData.Type == "S" )
+				   	   {
+			alert("Success: "+oData.Message); 
+			var oHistory = sap.ui.core.routing.History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+	        oModel.refresh();
+	        history.back();
+				//var bReplace = true;
+				//oView.getRouter().navTo("worklist", {}, bReplace);
+				// Otherwise we go backwards with a forward history
+				   	   }
+				   	   
+					else { 
+							alert("Error: "+oData.Message); 
+						 }
+					
+				   }
+							  
+					function fnE(oError)
+					{
+				    console.log(oError);
+					alert("Error in read: "+oError.message);
+					}
+					  
+	}, 
+/////////////////////////////////////////////////////			
+			
+/*						onApproveTask: function() {
+		    var oURLParameters =  {
+ ZWfTaskid : "0000020832",
+  ZWfActionType : "OK"
+  };
+  this._oModel.callFunction("/ZWfAction", {
+  method: "POST",
+  urlParameters: oURLParameters,
+   success: fnS,
+  error: fnE
+  });
+  
+  function fnS(){
+   alert("Success");
+  }
+  function fnE(){
+         alert("Error in read");
+  }
+  
+						},*/
+						
+/*	onApproveTask: function() {
+	this.oModel.callFunction("ZWfAction", "POST", null, null, fnS, fnE);
+	function fnS(){
+   alert("Success");
+  }
+  function fnE(){
+         alert("Error in read");
+  }		
+},*/
+
+
+/*	onApproveTask: function() {
+var OData = new sap.ui.mode.odata.ODataModel(); 		
+OData.request
+({
+ requestUri: "http://gwserver:8000/sap/opu/odata/sap/Z_UI5_USER_MAINT_CM/z_ui5_user_maintCollection('AGAMPA')",
+ method: "GET",
+ headers:
+	 {     
+	                        "X-Requested-With": "XMLHttpRequest",
+	                        "Content-Type": "application/atom+xml",
+	                        "DataServiceVersion": "2.0",        
+	                        "X-CSRF-Token":"Fetch"    
+	 }
+ }, 
+ 
+ function(data, response) {
+ 	header_xcsrf_token = response.headers['x-csrf-token'];
+ 	var oHeaders = {
+ 		"x-csrf-token" : header_xcsrf_token,
+ 		'Accept' : 'application/json',
+ };
+ 
+ OData.request
+({
+ requestUri: "http://gwserver:8000/sap/opu/odata/sap/Z_UI5_USER_MAINT_CM/z_ui5_user_maintCollection('AGAMPA')",
+ method: "POST",
+ headers : oHeaders,
+ data:oEntry
+	},
+	function(data,request){
+		alert("success");
+		location.reload(true);
+	}, function(err){
+		alert("error");
+		
+	});
+	
+ }, function(err) {
+ 	var request =err.request;
+ 	var response = err.response;
+ 	alert("error");
+ });
+ },*/
+                                        
+		
+		/* codice di esempio da implementare per approvazione task da pulsante
+		<!--
+		onApproveTask: function() {
+			var aSelectedProducts, i, sPath, oProduct, oProductId;
+			aSelectedProducts = this.byId("table").getSelectedItems();
+			if (aSelectedProducts.length) {
+				for (i = 0; i < aSelectedProducts.length; i++) {
+					oProduct = aSelectedProducts[i];
+					oProductId = oProduct.getBindingContext().getProperty("ProductID");
+					sPath = oProduct.getBindingContextPath();
+					this.getModel().remove(sPath, {
+						success : this._handleUnlistActionResult.bind(this, oProductId, true, i+1, aSelectedProducts.length),
+						error : this._handleUnlistActionResult.bind(this, oProductId, false, i+1, aSelectedProducts.length)
+					});
+				}
+			} else {
+				this._showErrorMessage(this.getModel("i18n").getResourceBundle().getText("TableSelectProduct"));
+			}
+		},
+       */
     
 		
 		

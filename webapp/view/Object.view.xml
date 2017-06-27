@@ -186,6 +186,14 @@
 		
 		<footer>
 			<OverflowToolbar id="footerToolbar">
+				
+					<Button type="Accept" text="Approve" press="onApproveTask">
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				  </Button>
+				  <Button type="Reject" text="Reject" press="onRejectTask">
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				</Button>
+	<!--
 				<ToolbarSpacer/>
 				<Button id="shareButton" tooltip="{i18n>shareTooltip}" icon="sap-icon://action" press="onSharePress">
 					<dependents>
@@ -198,6 +206,7 @@
 						</ActionSheet>
 					</dependents>
 				</Button>
+				!-->
 			</OverflowToolbar>
 		</footer>
 	</Page>
