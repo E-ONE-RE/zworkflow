@@ -1,28 +1,47 @@
-<mvc:View controllerName="Workflow.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
-	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:smartTable="sap.ui.comp.smarttable"
-	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:sap.ui.core="sap.ui.core" xmlns:l="sap.ui.layout"
-	xmlns:html="http://www.w3.org/1999/xhtml">
+<mvc:View controllerName="Workflow.controller.Object" 
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:semantic="sap.m.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar" 
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+	xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:form="sap.ui.layout.form" >
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
 		<html:style>
 			#application-zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
 			#application-zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td{ border-top: 1pt solid rgba(40, 105,
-			227, 0.6); !important; }#application-zworkflow-display-component---object--Table2-listUl,
-			#application-zworkflow-display-component---object--Table3-listUl {border: 1px solid rgba(40, 105, 227, 0.6);}
-			td[aria-describedby=application-zworkflow-display-component---object--nameColumnTitle9] { font-style: italic; !important; }
-			#application-zworkflow-display-component---object--iconTab2--header-head{ display: table; !important; margin: 0 auto; !important; }
+			227, 0.6); !important; }
+			#application-zworkflow-display-component---object--Table2-listUl,
+			#application-zworkflow-display-component---object--Table3-listUl 
+			{border: 1px solid rgba(40, 105, 227, 0.6);}
+			td[aria-describedby=application-zworkflow-display-component---object--nameColumnTitle9] 
+			{ font-style: italic; !important; }
+			#application-zworkflow-display-component---object--iconTab2--header-head
+			{ display: table; !important; margin: 0 auto; !important; }
+			#application-zworkflow-display-component---object--btn3-inner{
+			background-color: #ff9800; !important;
+			 cursor: pointer; !important;
+			}
+			#application-zworkflow-display-component---object--btn3-inner:hover{
+			background-color: #ce7b02; !important;
+			 cursor: pointer; !important;
+			}
 		</html:style>
-		<ObjectHeader responsive="true" intro="Currently running for user {ZWfUtente} in process {ZWfProcid}" title="Task {ZWfTaskid}"
+
+	<ObjectHeader responsive="true" title="Task {ZWfTaskid}" icon="sap-icon://activity-individual" intro="Currently running in process {ZWfProcid}" 
+	number="{ZWfValoreDocumento}" numberUnit="{ZWfValuta}" 
 			backgroundDesign="Translucent">
-			<attributes>
-				<ObjectAttribute title="Process" text="{ZWfText}"/>
-				<ObjectAttribute title="Document" text="{ZWfDocument}"/>
-			</attributes>
 			<statuses>
+					<ObjectStatus title="Process" text="{ZWfText}"/>
+				<ObjectStatus title="Document" text="{ZWfDocument}"/>
 				<ObjectStatus title="Status" text="{path : 'IconId', formatter: '.formatter.statusText'}"
 					state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
 			</statuses>
-		</ObjectHeader>
+		</ObjectHeader> 
 		<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false">
 			<items>
 				<IconTabFilter icon="sap-icon://hint" text="Informations">
@@ -33,7 +52,7 @@
 									<Title text="Task History"/>
 								</Toolbar>
 							</headerToolbar>
-							<smartTable:SmartTable id="ST_storico" entitySet="TaskHstSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+						<smartTable:SmartTable id="ST_storico" entitySet="TaskHstSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
 								header="Task History" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToHst"
 								class="sapUiResponsiveContentPadding">
 								<Table id="Table2" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
@@ -76,7 +95,7 @@
 										</Column>
 									</columns>
 									<items>
-										<ColumnListItem type="inactive">
+										<ColumnListItem>
 											<cells>
 												<ObjectIdentifier title="{ZWfUtente}"/>
 											</cells>
@@ -102,7 +121,9 @@
 												<ObjectIdentifier title="{ZWfTaskid}"/>
 											</cells>
 											<cells>
-												<ObjectIdentifier title="{path: 'ZWfAzione', formatter:'.formatter.iconAction'}"/>
+												
+													<ObjectStatus text="{path: 'ZWfAzione', formatter:'.formatter.actionText'}"
+							                         state="{path: 'ZWfAzione', formatter:'.formatter.actionColor'}"/>
 											</cells>
 										</ColumnListItem>
 									</items>
@@ -110,7 +131,7 @@
 								<smartTable:layoutData>
 									<FlexItemData growFactor="1" baseSize="0%"/>
 								</smartTable:layoutData>
-							</smartTable:SmartTable>
+							</smartTable:SmartTable> 
 						</Panel>
 						<Panel id="panel2" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 							<headerToolbar>
@@ -118,7 +139,7 @@
 									<Title text="Process Steps"/>
 								</Toolbar>
 							</headerToolbar>
-							<smartTable:SmartTable id="Processo" entitySet="ProcSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+							<smartTable:SmartTable id="Processo" entitySet="ProcessSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
 								header="Process Steps" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToProcess"
 								class="sapUiResponsiveContentPadding">
 								<Table id="Table3" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
@@ -153,7 +174,7 @@
 										</Column>
 									</columns>
 									<items>
-										<ColumnListItem type="inactive">
+										<ColumnListItem>
 											<cells>
 												<ObjectIdentifier title="{ZWfStep}"/>
 											</cells>
@@ -185,19 +206,25 @@
 						</Panel>
 					</content>
 				</IconTabFilter>
-				<IconTabFilter icon="sap-icon://attachment" text="Attachments"></IconTabFilter>
+				<IconTabFilter icon="sap-icon://attachment" text="Attachments">
+				</IconTabFilter>
 				<IconTabFilter icon="sap-icon://documents" text="Documents"></IconTabFilter>
 			</items>
 		</IconTabBar>
+		
 		<footer>
 			<OverflowToolbar id="footerToolbar">
-				
-					<Button type="Accept" text="Approve" press="onApproveTask">
+					<ToolbarSpacer/>
+					<Button id="btn1" type="Accept" text="Approve" press="actionTask">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				  </Button>
-				  <Button type="Reject" text="Reject" press="onRejectTask">
+				  <Button id="btn2" type="Reject" text="Reject" press="actionTask">
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				   </Button>
+				  	<Button id="btn3" type="Default" text="Move" press="actionTask">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				</Button>
+			
 	<!--
 				<ToolbarSpacer/>
 				<Button id="shareButton" tooltip="{i18n>shareTooltip}" icon="sap-icon://action" press="onSharePress">
