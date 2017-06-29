@@ -48,8 +48,6 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 			<!-- (SE) multiselect per poter selezionare più righe 21062017-->
 			<Table id="table" 
 			
-			mode="MultiSelect"
-			
 			width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished="onUpdateFinished" backgroundDesign="Translucent">

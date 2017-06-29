@@ -32,14 +32,16 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-		    
+		
 		   
 			this.setModel(oViewModel, "objectView");
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
 				// Restore original busy indicator delay for the object view
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 				oViewModel.setProperty("/busy", false);
+			
 			});
+			
 		},
 
 		/* =========================================================== */
@@ -96,10 +98,25 @@ function fnE(oError){
 			},
   */
 /////////////////////////////////////////////////////////////////////  
-		onApproveTask: function() 
+		actionTask: function(oEvent) 
 	{
-		var sSelectedTaskid,  i, sPath, oTask, oTaskId, oView;
+		var sButtonId;
+		var oView, oViewW;
+		var sSelectedTaskid;
+		var sAction;
+		//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
             oView=this;
+            var oModel = this.getModel();
+            //aButton=this.byId("footerToolbar").mAggregations.content;
+           sButtonId = oEvent.getSource().getId();
+           
+           if(sButtonId == "application-zworkflow-display-component---object--btn1"){
+           	 sAction="OK";
+           }else{
+           	sAction="KO";
+           }
+           
+            
 // al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
 //una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
 // che richiedono la scelta di un nuovo processo da far partire
@@ -119,13 +136,13 @@ function fnE(oError){
 					// recupero il taskid selezionato
 					//oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
 					 var oUrlParams = {
-				//	 ZWfTaskid : "0000025447",
-				     ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
-					  ZWfActionType : "OK"
+				 //ZWfTaskid : "0000025000",
+				      ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
+					  ZWfActionType : sAction
 					  };
 					  //var oView = this.getView();
 					  //oModel = this.getModel(),
-					  var oModel = this.getModel();
+					   oModel = this.getModel();
 					  // lancio la function import creata sull'odata
 					  oModel.callFunction("/ZWfAction", {
 					  method:"POST",
@@ -143,17 +160,16 @@ function fnE(oError){
 				   	// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
 				   	if (oData.Type == "S" )
 				   	   {
-			alert("Success: "+oData.Message); 
-			var oHistory = sap.ui.core.routing.History.getInstance();
-			var sPreviousHash = oHistory.getPreviousHash();
-	        oModel.refresh();
-	        history.back();
-				//var bReplace = true;
-				//oView.getRouter().navTo("worklist", {}, bReplace);
-				// Otherwise we go backwards with a forward history
+			alert("Success: "+oData.Message);
+		   	oViewW = sap.ui.getCore().byId("application-zworkflow-display-component---worklist");
+		     var oTable = oViewW.byId("table");
+		     oTable.getBinding("items").refresh();
+		    sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
 				   	   }
 				   	   
 					else { 
+					 //richiama una funzione di Object.Controller con questa sintassi
+			
 							alert("Error: "+oData.Message); 
 						 }
 					
@@ -162,6 +178,7 @@ function fnE(oError){
 					function fnE(oError)
 					{
 				    console.log(oError);
+				    
 					alert("Error in read: "+oError.message);
 					}
 					  
@@ -291,7 +308,7 @@ OData.request
 		onNavBack: function() {
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
-
+     var oModel = this.getModel();
 			if (sPreviousHash !== undefined) {
 				// The history contains a previous entry
 				history.go(-1);

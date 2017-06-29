@@ -45,12 +45,18 @@ sap.ui.define([
 		
 		
 
-		formatTime	: function(oTime) {                                                            
+	formatTime	: function(oTime) { 
+		if(oTime){
 			var oTimeFormat = sap.ui.core.format.DateFormat.getTimeInstance({pattern: "HH:mm:ss"});
 			var TZOffsetMs = new Date(0).getTimezoneOffset()*60*1000;                             
 			var timeStr = oTimeFormat.format(new Date(oTime.ms + TZOffsetMs));                      
-			return timeStr;                                                                       
-		},
+			return timeStr;}
+			else{
+				return oTime;
+			}
+},
+                                            
+	
 
 		
 		iconType: function(sIconId) {
@@ -63,21 +69,47 @@ sap.ui.define([
 					}
 				},
 			
-	   iconAction: function(sAction) {
-				     switch(sAction) {
-				    case "OK":
-				       return "sap-icon://employee-approvals";
-				        break;
-				    case "KO":
-				        return "sap-icon://employee-rejections";
-				        break;
-				    case "MOVE":
-				        return "sap-icon://initiative";
-				        break;
-				    default:
-				       return  "sap-icon://pending";
-				}	
-				 },
+	  actionText: function(sAction) {
+     switch(sAction) {
+    case "OK":
+       return "Approved";
+        break;
+    case "KO":
+        return "Rejected";
+        break;
+    case "MOVE":
+        return "Moved";
+        break;
+    default:
+       return  "Pending";
+}	
+ },
+ 
+  actionColor: function(sAction) {
+     switch(sAction) {
+    case "OK":
+       return "Success";
+        break;
+    case "KO":
+        return "Error";
+        break;
+    case "MOVE":
+        return "Warning";
+        break;
+    default:
+       return  null;
+}	
+ },
+ 
+ 	statusText: function(sIconId){
+				if(sIconId==1){
+			 return "Not Urgent";
+				} else if (sIconId==2){
+			return "Urgent";
+				}else{
+			return "Critical";
+				}
+			},
 			
 		statusType: function(sIconId){
 				if(sIconId==1){
