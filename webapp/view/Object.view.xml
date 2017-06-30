@@ -211,7 +211,19 @@
 				<IconTabFilter icon="sap-icon://documents" text="Documents"></IconTabFilter>
 			</items>
 		</IconTabBar>
-		
+	
+
+	
+                 <!-- <ComboBox items="{
+					path: '/UserSet',
+					sorter: { path: 'Name2' },
+					suspended: true
+				}" loadItems="onRequestLoad"
+				placeholder="Select a user...">
+                    <items>
+                      <core:Item key="{Uname}" text="{Name1} {Name2}"/>
+                    </items>
+                  </ComboBox>!-->
 		<footer>
 			<OverflowToolbar id="footerToolbar">
 					<ToolbarSpacer/>
@@ -221,7 +233,7 @@
 				  <Button id="btn2" type="Reject" text="Reject" press="actionTask">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				   </Button>
-				  	<Button id="btn3" type="Default" text="Move" press="actionTask">
+				  	<Button id="btn3" type="Default" text="Move" press="showDialog">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				</Button>
 			

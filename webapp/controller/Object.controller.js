@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"Workflow/model/formatter"
-], function(BaseController, JSONModel, History, formatter, MessageToast, Button) {
+], function(BaseController, JSONModel, History, formatter, MessageToast, Button, Dialog, Input, Label, SuggestionItems, Item) {
 	"use strict";
 
 	return BaseController.extend("Workflow.controller.Object", {
@@ -28,7 +28,6 @@ sap.ui.define([
 					busy: true,
 					delay: 0
 				});
-
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
@@ -106,7 +105,6 @@ function fnE(oError){
 		var sAction;
 		//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
             oView=this;
-            var oModel = this.getModel();
             //aButton=this.byId("footerToolbar").mAggregations.content;
            sButtonId = oEvent.getSource().getId();
            
@@ -138,11 +136,12 @@ function fnE(oError){
 					 var oUrlParams = {
 				 //ZWfTaskid : "0000025000",
 				      ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
-					  ZWfActionType : sAction
+					  ZWfActionType : sAction,
+					  ZWfUser: ""
 					  };
 					  //var oView = this.getView();
 					  //oModel = this.getModel(),
-					   oModel = this.getModel();
+					   var oModel = this.getModel();
 					  // lancio la function import creata sull'odata
 					  oModel.callFunction("/ZWfAction", {
 					  method:"POST",
@@ -282,9 +281,19 @@ OData.request
 			}
 		},
        */
-
+       
+       
+       
+       /**
+        * Function per il lazy loding
+        */
+        
+       /* onRequestLoad: function(oEvent){
+       oEvent.getSource().getBinding("items").resume();
+        },*/
     
-
+     
+	
    		onShareInJamPress: function() {
 			var oViewModel = this.getModel("objectView"),
 				oShareDialog = sap.ui.getCore().createComponent({
@@ -318,6 +327,28 @@ OData.request
 				this.getRouter().navTo("worklist", {}, bReplace);
 			}
 		},
+		
+		showDialog: function (oEvent) {
+			var that = this;
+			if (!that.Dialog) {
+			
+               that.Dialog = sap.ui.xmlfragment("Workflow.view.Dialog", this, "Workflow.controller.Object");
+				//to get access to the global model
+				this.getView().addDependent(that.Dialog);
+			}
+ 
+		that.Dialog.open();
+		},
+	
+		
+		onCancel: function(){
+			this.Dialog.close();
+		},
+		
+		onAccept: function(){
+			this.Dialog.close();
+			return true;
+		},
 
 		/* =========================================================== */
 		/* internal methods                                            */
@@ -329,7 +360,14 @@ OData.request
 		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
 		 * @private
 		 */
+		 
+		/**
+		 * (MP): Inserito ---this.getModel().setSizeLimit(1000);--- in _onObjectMatched 
+		 * per fare in modo che il controllo "Input" istanziato nella funzione "showDialog" 
+		 * mostri tutti gli elementi, altrimenti limitati a 100
+		 */
 		_onObjectMatched: function(oEvent) {
+			this.getModel().setSizeLimit(1000);
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			var sObjectId2 = oEvent.getParameter("arguments").objectId2;
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
