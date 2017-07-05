@@ -99,19 +99,39 @@ function fnE(oError){
 /////////////////////////////////////////////////////////////////////  
 		actionTask: function(oEvent) 
 	{
+		
+		
 		var sButtonId;
 		var oView, oViewW;
 		var sSelectedTaskid;
-		var sAction;
+		var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
 		//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
             oView=this;
+         
+            	if(this._oPopover){
+			this._oPopover.close();
+		    sUname = this.sKey;
+		}
+		
+		if(this.Dialog){
+			this.Dialog.close();
+		}
+		
             //aButton=this.byId("footerToolbar").mAggregations.content;
-           sButtonId = oEvent.getSource().getId();
+           sButtonId = this.sButtonKey;
            
            if(sButtonId == "application-zworkflow-display-component---object--btn1"){
            	 sAction="OK";
-           }else{
+           	 sUname = undefined;
+           } else if(sButtonId == "application-zworkflow-display-component---object--btn2"){
            	sAction="KO";
+           	sUname = undefined;
+           }
+           
+           sUser="";
+           if(sUname != undefined){
+           	sAction="MOVE";
+           	sUser=sUname;
            }
            
             
@@ -137,7 +157,7 @@ function fnE(oError){
 				 //ZWfTaskid : "0000025000",
 				      ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
 					  ZWfActionType : sAction,
-					  ZWfUser: ""
+					  ZWfUser: sUser
 					  };
 					  //var oView = this.getView();
 					  //oModel = this.getModel(),
@@ -317,7 +337,6 @@ OData.request
 		onNavBack: function() {
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
-     var oModel = this.getModel();
 			if (sPreviousHash !== undefined) {
 				// The history contains a previous entry
 				history.go(-1);
@@ -328,28 +347,78 @@ OData.request
 			}
 		},
 		
-		showDialog: function (oEvent) {
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		/**
+		 * 
+		 *MOVE 
+		 * 
+		 */
+		
+		//Method to show the Popover Fragment
+		showPopover: function (oEvent) {
 			var that = this;
+			if (!that._oPopover) {
+			
+               that._oPopover = sap.ui.xmlfragment("Workflow.view.Popover", this, "Workflow.controller.Object");
+				//to get access to the global model
+				this.getView().addDependent(that._oPopover);
+			}
+        	var oButton = oEvent.getSource();
+			jQuery.sap.delayedCall(0, this, function () {
+				this._oPopover.openBy(oButton);
+			});
+		
+		},
+		
+		
+		//Show confirmation dialog
+			showDialog: function (oEvent) {
+			var that = this;
+			this.sButtonKey= oEvent.getSource().getId();//mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
 			if (!that.Dialog) {
 			
                that.Dialog = sap.ui.xmlfragment("Workflow.view.Dialog", this, "Workflow.controller.Object");
 				//to get access to the global model
 				this.getView().addDependent(that.Dialog);
+				if(sap.ui.Device.system.phone){
+					that.Dialog.setStretch(true);
+				}
 			}
- 
-		that.Dialog.open();
+			if(sap.ui.Device.system.phone){
+					that.Dialog.setStretch(true);
+				}
+        that.Dialog.open();
 		},
-	
 		
+		//Close Dialog
+		closeDialog: function(){
+		 this.Dialog.close();
+		 this.sButtonKey=undefined;//per controllare i conflitti in actionTask N.B.
+		},
+		
+	    //Method to handle cancel on the Popover for user selection
 		onCancel: function(){
-			this.Dialog.close();
+			this._oPopover.close();
 		},
 		
-		onAccept: function(){
-			this.Dialog.close();
-			return true;
+	    //Method to retrieve the selected key from the comboBox in Popover.fragment.xml		
+		selectionChange: function(oEvent){
+		this.sKey = oEvent.getSource().getProperty("selectedKey");
+			return this.sKey;
 		},
-
+		
+		//Method to load the Date just once requested
+	   lazyLoadItems: function(oEvent) {
+			oEvent.getSource().getBinding("items").resume();
+		},
+		
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        
+        
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
@@ -363,7 +432,7 @@ OData.request
 		 
 		/**
 		 * (MP): Inserito ---this.getModel().setSizeLimit(1000);--- in _onObjectMatched 
-		 * per fare in modo che il controllo "Input" istanziato nella funzione "showDialog" 
+		 * per fare in modo che il controllo "ComboBox" istanziato nella funzione "showDialog" 
 		 * mostri tutti gli elementi, altrimenti limitati a 100
 		 */
 		_onObjectMatched: function(oEvent) {

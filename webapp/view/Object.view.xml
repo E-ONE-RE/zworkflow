@@ -227,13 +227,13 @@
 		<footer>
 			<OverflowToolbar id="footerToolbar">
 					<ToolbarSpacer/>
-					<Button id="btn1" type="Accept" text="Approve" press="actionTask">
+					<Button id="btn1" type="Accept" text="Approve" press="showDialog">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				  </Button>
-				  <Button id="btn2" type="Reject" text="Reject" press="actionTask">
+				  <Button id="btn2" type="Reject" text="Reject" press="showDialog">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				   </Button>
-				  	<Button id="btn3" type="Default" text="Move" press="showDialog">
+				  	<Button id="btn3" type="Default" text="Move" press="showPopover">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				</Button>
 			

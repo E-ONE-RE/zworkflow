@@ -63,7 +63,7 @@ sap.ui.define([
 					if(sIconId==1){
 				 return "sap-icon://sys-enter-2";
 					} else if (sIconId==2) {
-				return "sap-icon://error";
+				return "sap-icon://alert";
 					}else{
 				return "sap-icon://alert";
 					}
