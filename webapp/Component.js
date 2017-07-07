@@ -48,6 +48,7 @@ sap.ui.define([
 					"pattern": "TaskSet/{objectId},{objectId2}",
 					"name": "object",
 					"target": "object"
+
 				},
 				{
 					"pattern": "PdfdocSet/{objectId},{objectId2},{objectId3},{objectId4}",
@@ -88,10 +89,7 @@ sap.ui.define([
 						"viewName": "NotFound",
 						"viewId": "notFound"
 					}
-					
-				
-					
-					
+
 				}
 			}
 		},

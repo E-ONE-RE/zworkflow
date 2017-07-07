@@ -32,7 +32,6 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-		
 		   
 			this.setModel(oViewModel, "objectView");
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
@@ -443,6 +442,7 @@ OData.request
 				sObjectId2 = oObject.ZWfTaskid,
 				sObjectId3 = oObject.ZWfDocument,
 				sObjectId4 = oObject.ZWfTipodoc,
+
 				sObjectName = oObject.ZWfUtente;
 
 			// Everything went fine.
