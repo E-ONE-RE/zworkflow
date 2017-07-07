@@ -158,7 +158,7 @@ oHtml.setContent("<iframe src="+ "http://10.126.72.12:50040" + "/google" +" heig
 				var oHtml = this.getView().byId("map_iframe");
 
                //oHtml.setContent("<iframe src="+ "http://10.126.72.12:50040" + sObjectId4  +" type='application/pdf'></iframe>");				
-                oHtml.setContent("<object data="+ "http://10.126.72.12:50040" + sObjectId4  +" type='application/pdf' allowscriptaccess='always' allowfullscreen='true'><p>Please download the PDF to view it: <a href="+ "http://10.126.72.12:50040" + sObjectId4 +">Download PDF</a></p></object>");				
+                oHtml.setContent("<object data="+ "http://10.126.72.12:50040" + sObjectId4  +" type='application/pdf' allowscriptaccess='always' allowfullscreen='true'><p>Please download the PDF to view it: <a href="+ "http://10.126.72.12:50040" + sObjectId4 +" target='_blank'>Download PDF</a></p></object>");				
  
 
 			// Everything went fine.
