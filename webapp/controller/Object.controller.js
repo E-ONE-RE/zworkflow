@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"Workflow/model/formatter"
-], function(BaseController, JSONModel, History, formatter, MessageToast, Button) {
+], function(BaseController, JSONModel, History, formatter, MessageToast, Button, Dialog, Input, Label, SuggestionItems, Item, Template) {
 	"use strict";
 
 	return BaseController.extend("Workflow.controller.Object", {
@@ -28,7 +28,6 @@ sap.ui.define([
 					busy: true,
 					delay: 0
 				});
-
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
@@ -41,7 +40,7 @@ sap.ui.define([
 				oViewModel.setProperty("/busy", false);
 			
 			});
-			
+		
 		},
 
 		/* =========================================================== */
@@ -100,20 +99,39 @@ function fnE(oError){
 /////////////////////////////////////////////////////////////////////  
 		actionTask: function(oEvent) 
 	{
+		
+		
 		var sButtonId;
 		var oView, oViewW;
 		var sSelectedTaskid;
-		var sAction;
+		var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
 		//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
             oView=this;
-            var oModel = this.getModel();
+         
+            	if(this._oPopover){
+			this._oPopover.close();
+		    sUname = this.sKey;
+		}
+		
+		if(this.Dialog){
+			this.Dialog.close();
+		}
+		
             //aButton=this.byId("footerToolbar").mAggregations.content;
-           sButtonId = oEvent.getSource().getId();
+           sButtonId = this.sButtonKey;
            
            if(sButtonId == "application-zworkflow-display-component---object--btn1"){
            	 sAction="OK";
-           }else{
+           	 sUname = undefined;
+           } else if(sButtonId == "application-zworkflow-display-component---object--btn2"){
            	sAction="KO";
+           	sUname = undefined;
+           }
+           
+           sUser="";
+           if(sUname != undefined){
+           	sAction="MOVE";
+           	sUser=sUname;
            }
            
             
@@ -138,11 +156,12 @@ function fnE(oError){
 					 var oUrlParams = {
 				 //ZWfTaskid : "0000025000",
 				      ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
-					  ZWfActionType : sAction
+					  ZWfActionType : sAction,
+					  ZWfUser: sUser
 					  };
 					  //var oView = this.getView();
 					  //oModel = this.getModel(),
-					   oModel = this.getModel();
+					   var oModel = this.getModel();
 					  // lancio la function import creata sull'odata
 					  oModel.callFunction("/ZWfAction", {
 					  method:"POST",
@@ -282,9 +301,19 @@ OData.request
 			}
 		},
        */
-
+       
+       
+       
+       /**
+        * Function per il lazy loding
+        */
+        
+       /* onRequestLoad: function(oEvent){
+       oEvent.getSource().getBinding("items").resume();
+        },*/
     
-
+     
+	
    		onShareInJamPress: function() {
 			var oViewModel = this.getModel("objectView"),
 				oShareDialog = sap.ui.getCore().createComponent({
@@ -308,7 +337,6 @@ OData.request
 		onNavBack: function() {
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
-     var oModel = this.getModel();
 			if (sPreviousHash !== undefined) {
 				// The history contains a previous entry
 				history.go(-1);
@@ -318,7 +346,79 @@ OData.request
 				this.getRouter().navTo("worklist", {}, bReplace);
 			}
 		},
-
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		/**
+		 * 
+		 *MOVE 
+		 * 
+		 */
+		
+		//Method to show the Popover Fragment
+		showPopover: function (oEvent) {
+			var that = this;
+			if (!that._oPopover) {
+			
+               that._oPopover = sap.ui.xmlfragment("Workflow.view.Popover", this, "Workflow.controller.Object");
+				//to get access to the global model
+				this.getView().addDependent(that._oPopover);
+			}
+        	var oButton = oEvent.getSource();
+			jQuery.sap.delayedCall(0, this, function () {
+				this._oPopover.openBy(oButton);
+			});
+		
+		},
+		
+		
+		//Show confirmation dialog
+			showDialog: function (oEvent) {
+			var that = this;
+			this.sButtonKey= oEvent.getSource().getId();//mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
+			if (!that.Dialog) {
+			
+               that.Dialog = sap.ui.xmlfragment("Workflow.view.Dialog", this, "Workflow.controller.Object");
+				//to get access to the global model
+				this.getView().addDependent(that.Dialog);
+				if(sap.ui.Device.system.phone){
+					that.Dialog.setStretch(true);
+				}
+			}
+			if(sap.ui.Device.system.phone){
+					that.Dialog.setStretch(true);
+				}
+        that.Dialog.open();
+		},
+		
+		//Close Dialog
+		closeDialog: function(){
+		 this.Dialog.close();
+		 this.sButtonKey=undefined;//per controllare i conflitti in actionTask N.B.
+		},
+		
+	    //Method to handle cancel on the Popover for user selection
+		onCancel: function(){
+			this._oPopover.close();
+		},
+		
+	    //Method to retrieve the selected key from the comboBox in Popover.fragment.xml		
+		selectionChange: function(oEvent){
+		this.sKey = oEvent.getSource().getProperty("selectedKey");
+			return this.sKey;
+		},
+		
+		//Method to load the Date just once requested
+	   lazyLoadItems: function(oEvent) {
+			oEvent.getSource().getBinding("items").resume();
+		},
+		
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        
+        
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
@@ -329,7 +429,14 @@ OData.request
 		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
 		 * @private
 		 */
+		 
+		/**
+		 * (MP): Inserito ---this.getModel().setSizeLimit(1000);--- in _onObjectMatched 
+		 * per fare in modo che il controllo "ComboBox" istanziato nella funzione "showDialog" 
+		 * mostri tutti gli elementi, altrimenti limitati a 100
+		 */
 		_onObjectMatched: function(oEvent) {
+			this.getModel().setSizeLimit(1000);
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			var sObjectId2 = oEvent.getParameter("arguments").objectId2;
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
@@ -339,10 +446,10 @@ OData.request
 				});
 				this._bindView("/" + sObjectPath );
 			}.bind(this));
-		
+			
+		  
 		},
 		
-		//Color for the tables
 		
 	
 
@@ -373,6 +480,17 @@ OData.request
 					}
 				}
 			});
+			
+			 var oView = this.getView();
+            var oObject = oView.getBindingContext().getObject();
+            var sDocumentId = oObject.ZWfDocument;
+			var oList = this.getView().byId("commentList");
+			var oFilters = new sap.ui.model.Filter("DocumentId", sap.ui.model.FilterOperator.EQ,                                                                                                  
+			sDocumentId);  // Dynamic parameter
+            oList.bindItems({path: "/NoteSet", template:
+            oList.getBindingInfo("items").template, filters : oFilters});
+		
+		
 		},
 
 		_onBindingChange: function() {
