@@ -8,7 +8,10 @@
 	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
 	xmlns:l="sap.ui.layout"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:form="sap.ui.layout.form" >
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartForm="sap.ui.comp.smartform" 
+	xmlns:smartField="sap.ui.comp.smartfield">
+
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
 		<html:style>
@@ -28,10 +31,7 @@
 			}
 			#application-zworkflow-display-component---object--btn3-inner:hover{
 			background-color: #ce7b02; !important;
-			cursor: pointer; !important;
-			}
-			
-			
+
 			#application-zworkflow-display-component---object--btn4-inner{
 			 cursor: pointer; !important;
 			 text-align:center;
@@ -40,7 +40,6 @@
  
 			}
 
-		
 		</html:style>
 
 	<ObjectHeader responsive="true" title="Task {ZWfTaskid}" icon="sap-icon://activity-individual" intro="Currently running in process {ZWfProcid}" 
@@ -53,10 +52,12 @@
 					state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
 			</statuses>
 		</ObjectHeader> 
+
 <!--	<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false" select="onSelectChanged"> -->
 <IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false">
 			<items>
 				<IconTabFilter key="1" icon="sap-icon://hint" text="Informations">
+
 					<content>
 						<Panel id="panel" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 							<headerToolbar>
@@ -280,19 +281,54 @@
 						</Panel>
 	    			</content>
 				</IconTabFilter>
+
 			</items>
 		</IconTabBar>
 		
+	<FeedInput
+		post="onPost"
+		icon="sap-icon://employee"
+		class="sapUiSmallMarginTopBottom"
+		placeholder="Add a comment here..."
+		/>
+	<List id="commentList"
+		showSeparators="Inner"
+	    items="{/NoteSet}"
+        backgroundDesign="Translucent">
+		<items>
+		<FeedListItem
+		    sender="{Sender}"
+		    timestamp="{Data}, {Ora}"
+		    info="{Descrizione}"
+			icon="sap-icon://employee"
+			iconDensityAware="false"
+			text="{Testo}"/>
+		</items>
+	</List>
+
+	
+                 <!-- <ComboBox items="{
+					path: '/UserSet',
+					sorter: { path: 'Name2' },
+					suspended: true
+				}" loadItems="onRequestLoad"
+				placeholder="Select a user...">
+                    <items>
+                      <core:Item key="{Uname}" text="{Name1} {Name2}"/>
+                    </items>
+                  </ComboBox>!-->
 		<footer>
 			<OverflowToolbar id="footerToolbar">
 					<ToolbarSpacer/>
-					<Button id="btn1" type="Accept" text="Approve" press="actionTask">
+
+					<Button id="btn1" type="Accept" text="Approve" press="showDialog">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				  </Button>
-				  <Button id="btn2" type="Reject" text="Reject" press="actionTask">
+				  <Button id="btn2" type="Reject" text="Reject" press="showDialog">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				   </Button>
-				  	<Button id="btn3" type="Default" text="Move" press="actionTask">
+				  	<Button id="btn3" type="Default" text="Move" press="showPopover">
+
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				</Button>
 			

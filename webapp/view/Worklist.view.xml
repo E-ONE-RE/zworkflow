@@ -39,7 +39,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						text="Urgent"/>
 					<IconTabFilter
 						key="moreUrgent"
-						icon="sap-icon://error"
+						icon="sap-icon://alert"
 						iconColor="Negative"
 						count="{worklistView>/moreUrgent}"
 						text="Very urgent"/>
