@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"Workflow/model/formatter"
-], function(BaseController, JSONModel, History, formatter, MessageToast, Button, Dialog, Input, Label, SuggestionItems, Item) {
+], function(BaseController, JSONModel, History, formatter, MessageToast, Button, Dialog, Input, Label, SuggestionItems, Item, Template) {
 	"use strict";
 
 	return BaseController.extend("Workflow.controller.Object", {
@@ -40,7 +40,7 @@ sap.ui.define([
 				oViewModel.setProperty("/busy", false);
 			
 			});
-			
+		
 		},
 
 		/* =========================================================== */
@@ -446,10 +446,10 @@ OData.request
 				});
 				this._bindView("/" + sObjectPath );
 			}.bind(this));
-		
+			
+		  
 		},
 		
-		//Color for the tables
 		
 	
 
@@ -480,6 +480,17 @@ OData.request
 					}
 				}
 			});
+			
+			 var oView = this.getView();
+            var oObject = oView.getBindingContext().getObject();
+            var sDocumentId = oObject.ZWfDocument;
+			var oList = this.getView().byId("commentList");
+			var oFilters = new sap.ui.model.Filter("DocumentId", sap.ui.model.FilterOperator.EQ,                                                                                                  
+			sDocumentId);  // Dynamic parameter
+            oList.bindItems({path: "/NoteSet", template:
+            oList.getBindingInfo("items").template, filters : oFilters});
+		
+		
 		},
 
 		_onBindingChange: function() {

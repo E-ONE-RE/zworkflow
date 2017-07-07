@@ -8,7 +8,9 @@
 	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
 	xmlns:l="sap.ui.layout"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:form="sap.ui.layout.form" >
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartForm="sap.ui.comp.smartform" 
+	xmlns:smartField="sap.ui.comp.smartfield">
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
 		<html:style>
@@ -42,6 +44,8 @@
 					state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
 			</statuses>
 		</ObjectHeader> 
+		
+	
 		<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false">
 			<items>
 				<IconTabFilter icon="sap-icon://hint" text="Informations">
@@ -211,7 +215,27 @@
 				<IconTabFilter icon="sap-icon://documents" text="Documents"></IconTabFilter>
 			</items>
 		</IconTabBar>
-	
+		
+	<FeedInput
+		post="onPost"
+		icon="sap-icon://employee"
+		class="sapUiSmallMarginTopBottom"
+		placeholder="Add a comment here..."
+		/>
+	<List id="commentList"
+		showSeparators="Inner"
+	    items="{/NoteSet}"
+        backgroundDesign="Translucent">
+		<items>
+		<FeedListItem
+		    sender="{Sender}"
+		    timestamp="{Data}, {Ora}"
+		    info="{Descrizione}"
+			icon="sap-icon://employee"
+			iconDensityAware="false"
+			text="{Testo}"/>
+		</items>
+	</List>
 
 	
                  <!-- <ComboBox items="{
