@@ -48,7 +48,14 @@ sap.ui.define([
 					"pattern": "TaskSet/{objectId},{objectId2}",
 					"name": "object",
 					"target": "object"
-				}],
+
+				},
+				{
+					"pattern": "PdfdocSet/{objectId},{objectId2},{objectId3},{objectId4}",
+					"name": "doc",
+					"target": "doc"
+				}
+				],
 
 				"targets": {
 					"worklist": {
@@ -61,14 +68,28 @@ sap.ui.define([
 						"viewId": "object",
 						"viewLevel": 2
 					},
+					
+				    "doc": {
+						"viewName": "Doc",
+						"viewId": "doc",
+						"viewLevel": 3
+					},
+					
 					"objectNotFound": {
 						"viewName": "ObjectNotFound",
 						"viewId": "objectNotFound"
 					},
+					
+					"docNotFound": {
+						"viewName": "DocNotFound",
+						"viewId": "docNotFound"
+					},
+					
 					"notFound": {
 						"viewName": "NotFound",
 						"viewId": "notFound"
 					}
+
 				}
 			}
 		},

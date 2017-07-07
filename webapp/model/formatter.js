@@ -43,7 +43,6 @@ sap.ui.define([
 			}
 		},
 		
-		
 
 	formatTime	: function(oTime) { 
 		if(oTime){
@@ -110,6 +109,7 @@ sap.ui.define([
 			return "Critical";
 				}
 			},
+
 			
 		statusType: function(sIconId){
 				if(sIconId==1){

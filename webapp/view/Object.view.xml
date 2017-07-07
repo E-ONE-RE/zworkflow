@@ -11,6 +11,7 @@
 	xmlns:form="sap.ui.layout.form"
 	xmlns:smartForm="sap.ui.comp.smartform" 
 	xmlns:smartField="sap.ui.comp.smartfield">
+
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
 		<html:style>
@@ -30,8 +31,15 @@
 			}
 			#application-zworkflow-display-component---object--btn3-inner:hover{
 			background-color: #ce7b02; !important;
+
+			#application-zworkflow-display-component---object--btn4-inner{
 			 cursor: pointer; !important;
+			 text-align:center;
+			 margin-top:20px; !important;
+			 position: relative; !important;
+ 
 			}
+
 		</html:style>
 
 	<ObjectHeader responsive="true" title="Task {ZWfTaskid}" icon="sap-icon://activity-individual" intro="Currently running in process {ZWfProcid}" 
@@ -44,11 +52,12 @@
 					state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
 			</statuses>
 		</ObjectHeader> 
-		
-	
-		<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false">
+
+<!--	<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false" select="onSelectChanged"> -->
+<IconTabBar id="iconTab2" expandable="false" backgroundDesign="Transparent" applyContentPadding="false">
 			<items>
-				<IconTabFilter icon="sap-icon://hint" text="Informations">
+				<IconTabFilter key="1" icon="sap-icon://hint" text="Informations">
+
 					<content>
 						<Panel id="panel" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 							<headerToolbar>
@@ -210,9 +219,69 @@
 						</Panel>
 					</content>
 				</IconTabFilter>
-				<IconTabFilter icon="sap-icon://attachment" text="Attachments">
+			
+				<IconTabFilter key="2" icon="sap-icon://documents" text="Documents">
+						
+					<content>
+							
+						<html:div style="text-align:center">
+						
+							 <Button id="btn4" icon="sap-icon://pdf-attachment" type="Emphasized" text="Open Document" press="onOpenDoc">
+									  <layoutData>
+									  	<OverflowToolbarLayoutData moveToOverflow="false" hAlign="Right"/>
+									  </layoutData>
+							  </Button>
+						</html:div>
+					</content>
+				
+						
 				</IconTabFilter>
-				<IconTabFilter icon="sap-icon://documents" text="Documents"></IconTabFilter>
+				
+				
+				<IconTabFilter key="3" icon="sap-icon://attachment" text="Attachments">
+					<content>
+						<Panel id="panel3" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
+							<headerToolbar>
+								<Toolbar height="auto">
+									<Title text="Attachments"/>
+								</Toolbar>
+							</headerToolbar>
+						<smartTable:SmartTable id="Attachments" entitySet="AttSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+								header="Attachments" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToAtt"
+								class="sapUiResponsiveContentPadding">
+								<Table id="Table22" width="auto" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+									<columns>
+										<Column id="C11" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"Num", "columnKey":"Num"}' class="myStyle">
+											<Text text="N." id="nameColumnTitle11"/>
+										</Column>
+										<Column id="C22" width="auto" minScreenWidth="phone" demandPopin="true" visible="true"
+											customData:p13nData='\{"leadingProperty":"CompId", "columnKey":"CompId"}'>
+											<Text text="Data Inizio" id="nameColumnTitle22"/>
+										</Column>
+										
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{Num}"/>
+											</cells>
+											
+											<cells>
+												<ObjectIdentifier title="{CompId}"/>
+											</cells>
+
+										</ColumnListItem>
+									</items>
+								</Table>
+								<smartTable:layoutData>
+									<FlexItemData growFactor="1" baseSize="0%"/>
+								</smartTable:layoutData>
+							</smartTable:SmartTable> 
+						</Panel>
+	    			</content>
+				</IconTabFilter>
+
 			</items>
 		</IconTabBar>
 		
@@ -251,6 +320,7 @@
 		<footer>
 			<OverflowToolbar id="footerToolbar">
 					<ToolbarSpacer/>
+
 					<Button id="btn1" type="Accept" text="Approve" press="showDialog">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				  </Button>
@@ -258,6 +328,7 @@
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				   </Button>
 				  	<Button id="btn3" type="Default" text="Move" press="showPopover">
+
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				</Button>
 			
@@ -275,6 +346,7 @@
 					</dependents>
 				</Button>
 				!-->
+
 			</OverflowToolbar>
 		</footer>
 	</Page>

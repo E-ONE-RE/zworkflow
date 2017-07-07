@@ -57,13 +57,18 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 					</Toolbar>
 				</headerToolbar>
 						<columns>
-						<Column id="docColumn">
+						<Column id="docColumn" >
 							<Text text="{i18n>tableDocColumnTitle}" id="docColumnTitle"/>
 						</Column>
 						
 						<Column id="userColumn"  demandPopin="false"
 		    						minScreenWidth="Tablet">
 						 	<Text text="{i18n>tableUserColumnTitle}" id="userColumnTitle"/>
+						</Column>
+						
+						<Column id="ActivityColumn" demandPopin="false"
+		    						minScreenWidth="Tablet">
+						 	<Text text="{i18n>tableActivityColumnTitle}" id="ActivityColumnTitle"/>
 						</Column>
 						
 						<Column id="procidColumn"  demandPopin="false"
@@ -87,12 +92,10 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						
 						-->
 						
-					    <Column id="statusColumn" demandPopin="true"
-		    						minScreenWidth="Tablet">
-								<Text text="{i18n>tableStatusColumnTitle}" id="StatusColumnTitle"/>
-						</Column>
+					  
 						
-						<Column id="startDateColumn">
+						<Column id="startDateColumn" demandPopin="true"
+		    						minScreenWidth="Tablet">
 							<Text text="{i18n>tableStartDateColumnTitle}" id="StartDateColumnTitle"/>
 						</Column>
 							
@@ -104,6 +107,10 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 		    						 minScreenWidth="Tablet">
 								<Text text="{i18n>tableCurrencyColumnTitle}" id="currencyColumnTitle"/>
 						</Column>
+						
+						  <Column id="statusColumn">
+								<Text text="{i18n>tableStatusColumnTitle}" id="StatusColumnTitle"/>
+						</Column>
 					
 			</columns>
 			<items>
@@ -112,6 +119,8 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						<ObjectIdentifier title="{ZWfDocument}"/>
 							
 						<Text  text="{ZWfUtente}"/>
+						
+						<Text  text="{ZWfText}"/>
 						
 						<Text text="{ path: 'ZWfProcid', formatter: '.formatter.formatPadding' }"/>
 					
@@ -126,8 +135,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 					               formatter: '.formatter.quantityState'}"
 					               />
 					-->
-						<ObjectStatus icon="{ path: 'IconId', formatter: '.formatter.iconType' }"
-							state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
+						
 
 					
 						<Text text="{ path: 'ZDtStart', formatter: '.formatter.formatDate' }"/>
@@ -139,6 +147,9 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 								}"/>
 						
 						<Text text="{ZWfValuta}"/>
+						
+						<ObjectStatus icon="{ path: 'IconId', formatter: '.formatter.iconType' }"
+							state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
 								
 					</cells>			
 				</ColumnListItem>
@@ -161,6 +172,7 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						</ActionSheet>
 					</dependents>
 				</Button>
+
 			</OverflowToolbar>
 		</footer>
 	</Page>

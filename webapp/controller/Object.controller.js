@@ -31,16 +31,16 @@ sap.ui.define([
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-		
-		   
+
 			this.setModel(oViewModel, "objectView");
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function() {
 				// Restore original busy indicator delay for the object view
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 				oViewModel.setProperty("/busy", false);
-			
+
 			});
-		
+
+
 		},
 
 		/* =========================================================== */
@@ -70,8 +70,7 @@ sap.ui.define([
 		},*/
 		
 		/*
-			onApproveTask: function() {
-		
+onApproveTask: function() {
 OData.request
 ({
  requestUri: "http://gwserver:8000/sap/opu/odata/sap/Z_UI5_USER_MAINT_CM/z_ui5_user_maintCollection('AGAMPA')",
@@ -106,7 +105,7 @@ function fnE(oError){
 		var sSelectedTaskid;
 		var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
 		//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
-            oView=this;
+    //        oView=this;
          
             	if(this._oPopover){
 			this._oPopover.close();
@@ -134,13 +133,17 @@ function fnE(oError){
            	sUser=sUname;
            }
            
-            
+             //recupero taskid (SE)
+      var oView = this.getView();
+		  var oObject = oView.getBindingContext().getObject();
+			sSelectedTaskid = oObject.ZWfTaskid;
+  
 // al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
 //una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
 // che richiedono la scelta di un nuovo processo da far partire
 
             //trovo il task id andando a vedere il routing path ricavando la stringa con substring e indexOf
-			sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
+			//sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
 			//////////////////////////////////////////
 			
 			//if (aSelectedTaskid.length) 
@@ -312,7 +315,22 @@ OData.request
        oEvent.getSource().getBinding("items").resume();
         },*/
     
-     
+     // test per refresh view. non utilizzato al momento (SE)
+	   onSelectChanged: function(oEvent) {
+            var key = oEvent.getParameters().key;
+            if(key=="2") {
+       var oView2 = sap.ui.getCore().byId("application-zworkflow-display-component---object");
+			//sap.ui.getCore().getElementById("Workflow.controller.Object").getController().onOpenDoc();
+			//var oController = sap.ui.controller("Workflow.controller.Object").onOpenDoc();
+			//	var oView2 = sap.ui.getCore().byId("application-zworkflow-display-component---worklist");
+			//		     var oTable = oView2.byId("table");
+			//		     oTable.getBinding("items").refresh();
+			//var oController = sap.ui.controller("Workflow.controller.Object");
+			//	oController.onOpenDoc();
+			sap.ui.getCore().byId("application-zworkflow-display-component---object").getModel().refresh(true);
+            }
+            
+        },
 	
    		onShareInJamPress: function() {
 			var oViewModel = this.getModel("objectView"),
@@ -346,6 +364,15 @@ OData.request
 				this.getRouter().navTo("worklist", {}, bReplace);
 			}
 		},
+
+
+        // evento button per apertura pdf odc (SE)
+		onOpenDoc: function(oEvent) {
+			// The source is the list item that got pressed
+			this._showObject(oEvent.getSource());
+		},
+		
+
 		
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,6 +446,7 @@ OData.request
         
         
         
+
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
@@ -451,7 +479,17 @@ OData.request
 		},
 		
 		
-	
+
+		// evento per binding vista doc per pdf
+		_showObject: function(oItem) {
+			this.getRouter().navTo("doc", {
+				objectId: oItem.getBindingContext().getProperty("ZWfProcid"),
+			    objectId2: oItem.getBindingContext().getProperty("ZWfTaskid"),
+			    objectId3: oItem.getBindingContext().getProperty("ZWfDocument"),
+			    objectId4: oItem.getBindingContext().getProperty("ZWfTipodoc")
+			});
+		},
+
 
 		/**
 		 * Binds the view to the object path.
@@ -508,6 +546,9 @@ OData.request
 				oObject = oView.getBindingContext().getObject(),
 				sObjectId = oObject.ZWfProcid,
 				sObjectId2 = oObject.ZWfTaskid,
+				sObjectId3 = oObject.ZWfDocument,
+				sObjectId4 = oObject.ZWfTipodoc,
+
 				sObjectName = oObject.ZWfUtente;
 
 			// Everything went fine.
