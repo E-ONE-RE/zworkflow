@@ -15,6 +15,9 @@ sap.ui.define([
 				"type": "XML",
 				"id": "app"
 			},
+			
+			 "includes": ["CSS/CustomStyle.css"], //MP: Class for CSS.
+			 
 			"dependencies": {
 				"libs": ["sap.ui.core", "sap.m", "sap.ui.layout"]
 			},

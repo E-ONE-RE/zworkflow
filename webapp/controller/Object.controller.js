@@ -6,6 +6,10 @@ sap.ui.define([
 	"Workflow/model/formatter"
 ], function(BaseController, JSONModel, History, formatter, MessageToast, Button, Dialog, Input, Label, SuggestionItems, Item, Template) {
 	"use strict";
+	
+	
+	
+
 
 	return BaseController.extend("Workflow.controller.Object", {
 		formatter: formatter,
@@ -39,9 +43,13 @@ sap.ui.define([
 				oViewModel.setProperty("/busy", false);
 
 			});
-
+			
+		                                                                                  
+		
+ 
 
 		},
+
 
 		/* =========================================================== */
 		/* event handlers                                              */
@@ -396,7 +404,13 @@ OData.request
 			jQuery.sap.delayedCall(0, this, function () {
 				this._oPopover.openBy(oButton);
 			});
-		
+			
+			this._oPopover.onAfterRendering = function(){
+    if (sap.m.ComboBox.prototype.onAfterRendering){
+        sap.m.ComboBox.prototype.onAfterRendering.apply(this);
+    }
+          var oComboBox = this.getView().byId("combo");
+};
 		},
 		
 		
@@ -422,7 +436,7 @@ OData.request
 		//Close Dialog
 		closeDialog: function(){
 		 this.Dialog.close();
-		 this.sButtonKey=undefined;//per controllare i conflitti in actionTask N.B.
+		 this.sButtonKey=undefined; //per controllare i conflitti in actionTask N.B.
 		},
 		
 	    //Method to handle cancel on the Popover for user selection
@@ -444,6 +458,17 @@ OData.request
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         
+        
+        /**
+         * 
+         * Retrieve document id for Notes
+         * 
+         */
+         
+         retrieveDoc: function(){
+         	var _sDocument = this.getView().geBindingContext().getObject().ZWfDocument;
+         	return _sDocument;
+         },
         
         
 
@@ -519,22 +544,54 @@ OData.request
 				}
 			});
 			
+			/**
+			 * MP
+			 * Binding alla lista per i commenti con filtro sul documento 
+			 *
+			 * Se l'app è visualizzata su smartphone allora lo  
+			 * Status (Not Urgent, Urgent...) non è viualizzato
+			 */
 			 var oView = this.getView();
             var oObject = oView.getBindingContext().getObject();
             var sDocumentId = oObject.ZWfDocument;
+            this._sDocumentId = sDocumentId;
 			var oList = this.getView().byId("commentList");
 			var oFilters = new sap.ui.model.Filter("DocumentId", sap.ui.model.FilterOperator.EQ,                                                                                                  
 			sDocumentId);  // Dynamic parameter
             oList.bindItems({path: "/NoteSet", template:
             oList.getBindingInfo("items").template, filters : oFilters});
-		
-		
+            	if(sap.ui.Device.system.phone){
+            		var oHeader = oView.byId("objHead");
+                    var aStatuses = oHeader.getStatuses();
+                    aStatuses[2].setVisible(false);
+            	}
+            	       
 		},
 
 		_onBindingChange: function() {
 			var oView = this.getView(),
 				oViewModel = this.getModel("objectView"),
 				oElementBinding = oView.getElementBinding();
+				
+				
+				
+///////////////////////////////////////////////////////////////////////////////////////////////////////////			
+			/**
+			 * MP
+			 * The following lines are used to update the binding of the List.
+			 * If the Object page is reloaded, the comments will be visible.
+			 */ 
+		    var oObject = oView.getBindingContext().getObject();
+            var sDocumentId = oObject.ZWfDocument;
+			var oList = this.getView().byId("commentList");
+			var oFilters = new sap.ui.model.Filter("DocumentId", sap.ui.model.FilterOperator.EQ,                                                                                                  
+			sDocumentId);  // Dynamic parameter
+            oList.bindItems({path: "/NoteSet", template:
+            oList.getBindingInfo("items").template, filters : oFilters});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 			// No data for the binding
 			if (!oElementBinding.getBoundContext()) {
