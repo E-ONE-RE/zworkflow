@@ -13,20 +13,7 @@
 <Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>docTitle}" busy="{docView>/busy}"
 		busyIndicatorDelay="{docView>/delay}" floatingFooter="false">
 	
-	<html:style>
-		
-	#application-zworkflow-display-component---doc--map_iframe{
-
-    width:99%; 
-    height:99%; 
-    seamless: seamless;
-    padding: 0; 
-    frameborder : 0px; 
-    -webkit-overflow-scrolling: auto;
-
-    }
-
-	</html:style>
+	
 
 			<content>
 

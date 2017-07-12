@@ -14,39 +14,13 @@
 
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
-		<html:style>
-			#application-zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
-			#application-zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td{ border-top: 1pt solid rgba(40, 105,
-			227, 0.6); !important; }
-			#application-zworkflow-display-component---object--Table2-listUl,
-			#application-zworkflow-display-component---object--Table3-listUl 
-			{border: 1px solid rgba(40, 105, 227, 0.6);}
-			td[aria-describedby=application-zworkflow-display-component---object--nameColumnTitle9] 
-			{ font-style: italic; !important; }
-			#application-zworkflow-display-component---object--iconTab2--header-head
-			{ display: table; !important; margin: 0 auto; !important; }
-			#application-zworkflow-display-component---object--btn3-inner{
-			background-color: #ff9800; !important;
-			 cursor: pointer; !important;
-			}
-			#application-zworkflow-display-component---object--btn3-inner:hover{
-			background-color: #ce7b02; !important;
+	
 
-			#application-zworkflow-display-component---object--btn4-inner{
-			 cursor: pointer; !important;
-			 text-align:center;
-			 margin-top:20px; !important;
-			 position: relative; !important;
- 
-			}
-
-		</html:style>
-
-	<ObjectHeader responsive="true" title="Task {ZWfTaskid}" icon="sap-icon://activity-individual" intro="Currently running in process {ZWfProcid}" 
+	<ObjectHeader id="objHead" responsive="true" title="Task {ZWfTaskid}" icon="sap-icon://activity-individual" intro="Currently running in process {ZWfProcid}" 
 	number="{ZWfValoreDocumento}" numberUnit="{ZWfValuta}" 
 			backgroundDesign="Translucent">
-			<statuses>
-					<ObjectStatus title="Process" text="{ZWfText}"/>
+				<statuses>
+				<ObjectStatus title="Process" text="{ZWfText}"/>
 				<ObjectStatus title="Document" text="{ZWfDocument}"/>
 				<ObjectStatus title="Status" text="{path : 'IconId', formatter: '.formatter.statusText'}"
 					state="{path : 'IconId', formatter: '.formatter.statusType' }"/>
@@ -286,6 +260,7 @@
 		</IconTabBar>
 		
 	<FeedInput
+	id="feed"
 		post="onPost"
 		icon="sap-icon://employee"
 		class="sapUiSmallMarginTopBottom"
@@ -294,6 +269,7 @@
 	<List id="commentList"
 		showSeparators="Inner"
 	    items="{/NoteSet}"
+	    noDataText="Nothing to show"
         backgroundDesign="Translucent">
 		<items>
 		<FeedListItem
