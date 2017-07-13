@@ -124,13 +124,23 @@ function fnE(oError){
 			this.Dialog.close();
 		}
 		
-            //aButton=this.byId("footerToolbar").mAggregations.content;
+           oView = this.getView();
            sButtonId = this.sButtonKey;
            
-           if(sButtonId == "application-zworkflow-display-component---object--btn1"){
+           
+           /** MP
+            * La forma oView.byId(<sID statico>).getId() è importante da mantenere
+            * in quanto una volta che l'applicazione è deployata ed eseguita sul server
+            * il prefisso dell'id statico cambia. Referenziando il controllo con il suo 
+            * id staticoutilizzando questa forma fa si che il controllo e la logica 
+            * applicata ad esso o a partire da azioni su di esso non cambi in dipendenza 
+            * dell'ambiente di esecuzione e del prefisso applicato. 
+            * FORMA PRECEDENTE: (sButtonId == "application-zworkflow-display-component---object--btn1") 
+            */ 
+           if(sButtonId == oView.byId("btn1").getId()){
            	 sAction="OK";
            	 sUname = undefined;
-           } else if(sButtonId == "application-zworkflow-display-component---object--btn2"){
+           } else if(sButtonId == oView.byId("btn2").getId()){
            	sAction="KO";
            	sUname = undefined;
            }
@@ -142,7 +152,7 @@ function fnE(oError){
            }
            
              //recupero taskid (SE)
-      var oView = this.getView();
+     
 		  var oObject = oView.getBindingContext().getObject();
 			sSelectedTaskid = oObject.ZWfTaskid;
   
@@ -191,7 +201,16 @@ function fnE(oError){
 				   	if (oData.Type == "S" )
 				   	   {
 			alert("Success: "+oData.Message);
-		   	oViewW = sap.ui.getCore().byId("application-zworkflow-display-component---worklist");
+			
+			/** MP
+			 *  Recupero il prefisso che viene messo di default alle viste nell'app.
+			 *  Stesso discorso fatto sopra per i bottoni. Piuttosto che avere il 
+			 *  prefisso statico dichiarato me lo ricavo. In questo modo l'applicazione
+			 *  svolge le correttamente le funzionalità indipendentemente dall'ambiente
+			 *  di run.
+			 */ 
+			var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
+		   	oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
 		     var oTable = oViewW.byId("table");
 		     oTable.getBinding("items").refresh();
 		    sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
@@ -327,7 +346,7 @@ OData.request
 	   onSelectChanged: function(oEvent) {
             var key = oEvent.getParameters().key;
             if(key=="2") {
-       var oView2 = sap.ui.getCore().byId("application-zworkflow-display-component---object");
+       var oView2 = sap.ui.getCore().byId(this.getView().getId()); //sostituito per i motivi elencati sopra per i bottoni
 			//sap.ui.getCore().getElementById("Workflow.controller.Object").getController().onOpenDoc();
 			//var oController = sap.ui.controller("Workflow.controller.Object").onOpenDoc();
 			//	var oView2 = sap.ui.getCore().byId("application-zworkflow-display-component---worklist");
@@ -335,7 +354,7 @@ OData.request
 			//		     oTable.getBinding("items").refresh();
 			//var oController = sap.ui.controller("Workflow.controller.Object");
 			//	oController.onOpenDoc();
-			sap.ui.getCore().byId("application-zworkflow-display-component---object").getModel().refresh(true);
+			sap.ui.getCore().byId(this.getView().getId()).getModel().refresh(true);
             }
             
         },
@@ -405,12 +424,7 @@ OData.request
 				this._oPopover.openBy(oButton);
 			});
 			
-			this._oPopover.onAfterRendering = function(){
-    if (sap.m.ComboBox.prototype.onAfterRendering){
-        sap.m.ComboBox.prototype.onAfterRendering.apply(this);
-    }
-          var oComboBox = this.getView().byId("combo");
-};
+	
 		},
 		
 		
