@@ -47,6 +47,8 @@ td[aria-describedby = application-zworkflow-display-component---object--nameColu
 	position:fixed;
 }
 
+
+
 /* MP
 Quando l'applicazione viene deployata, nell'id dell'elemento "zworkflow" viene modificato in "Zworkflow".
 La parte che segue è diversa da quella sopra in quanto tiene conto di questo cambiamento ed è valida nel 
@@ -102,8 +104,3 @@ td[aria-describedby = application-Zworkflow-display-component---object--nameColu
 #application-Zworkflow-display-component---object--footerToolbar{
 	position:fixed;
 }
-
-
-
-
-
