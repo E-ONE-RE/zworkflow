@@ -109,6 +109,7 @@ OData.request
 
 			if (this._oPopover) {
 				this._oPopover.close();
+				sap.ui.getCore().byId("combo").setValue("");
 				sUname = this.sKey;
 			}
 
@@ -463,6 +464,7 @@ OData.request
 		//Method to show the Popover Fragment
 		showPopover: function(oEvent) {
 			var that = this;
+		
 			if (!that._oPopover) {
 
 				that._oPopover = sap.ui.xmlfragment("Workflow.view.Popover", this, "Workflow.controller.Object");
@@ -472,22 +474,24 @@ OData.request
 			var oButton = oEvent.getSource();
 			jQuery.sap.delayedCall(0, this, function() {
 				this._oPopover.openBy(oButton);
+			    sap.ui.getCore().byId("combo").setValue("");//Cancella il contenuto del comboBox nel Popover.
 			});
 
-			if (sap.ui.Device.system.phone) {
+ 		 if (sap.ui.Device.system.phone) {
+				/** MP
+				 * Su smartphone l'input field non funziona a dovere 
+				 * le seguenti righe di codice servono per disabilitare
+				 * l'autocomplete e l'autoselect.
+				 */
 				var oComboBox = sap.ui.getCore().byId("combo");
 				oComboBox.addEventDelegate({
 					onkeydown: function(oEvent) {
-						if (oEvent.which == 8) {
-							alert($("#combo-inner").val());
-							$("#combo-inner").attr("autocomplete", "off");
-							$("#combo-inner").attr("autocorrect", "off");
-							$("#combo-inner").attr("autocapitalize", "off");
-
-						}
+							if (oEvent.which == 8) {
+								oComboBox.setValue("");
+							}
 					}
 				});
-			}
+		}
 
 		},
 
@@ -524,16 +528,14 @@ OData.request
 			that.Comment.open();
 		},
 
-		//Post a Comment
-		postComment: function(oEvent) {
-
-		},
+	
 
 		//Close Dialog
 		closeDialog: function() {
 			if (this.Comment) {
 				this.Comment.setState("None");
 				this.Comment.setTitle("");
+				sap.ui.getCore().byId("feed").setValue("");
 				this.Comment.close();
 			}
 			if (this.Dialog) {
@@ -543,7 +545,7 @@ OData.request
 		},
 
 		//Method to handle cancel on the Popover for user selection
-		onCancel: function() {
+		closePopover: function() {
 			this._oPopover.close();
 		},
 
@@ -716,7 +718,6 @@ OData.request
 			 * If the Object page is reloaded, the comments will be visible.
 			 */
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////	
-			var oView = this.getView();
 			sap.ui.controller("Workflow.controller.Object").fnEventHandler(oView);
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
