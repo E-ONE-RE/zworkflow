@@ -33,12 +33,15 @@
 				<IconTabFilter key="1" icon="sap-icon://hint" text="Informations">
 
 					<content>
+	
 						<Panel id="panel" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 							<headerToolbar>
 								<Toolbar height="auto">
 									<Title text="Task History"/>
 								</Toolbar>
 							</headerToolbar>
+							
+								
 						<smartTable:SmartTable id="ST_storico" entitySet="TaskHstSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
 								header="Task History" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToHst"
 								class="sapUiResponsiveContentPadding">
@@ -199,25 +202,127 @@
 						
 					<content>
 							
+								<Panel id="panel_doc" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
+							<headerToolbar>
+								<Toolbar height="auto">
+									<Title text="Document"/>
+								</Toolbar>
+							</headerToolbar>
+							
 						<html:div style="text-align:center">
 						
 							 <Button id="btn4" icon="sap-icon://pdf-attachment" type="Emphasized" text="Open Document" press="onOpenDoc">
 									  <layoutData>
-									  	<OverflowToolbarLayoutData moveToOverflow="false" hAlign="Right"/>
+									  	<OverflowToolbarLayoutData moveToOverflow="false" />
 									  </layoutData>
 							  </Button>
 						</html:div>
+						
+
+							</Panel>
+							
+						<Panel id="panel3" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
+							<headerToolbar>
+								<Toolbar height="auto">
+					<!--				<Title text="Attachments"/> -->
+								</Toolbar>
+							</headerToolbar>
+							
+		
+									
+									
+						<smartTable:SmartTable id="Attachments" entitySet="AttSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+								header="Attachments" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToAtt"
+								class="sapUiResponsiveContentPadding">
+							<!--	<Table id="Attach_table" width="auto" itemPress="onItemPress" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+							-->	<Table id="Attach_table" width="auto"  class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+								
+								
+								<columns>
+
+				
+										<Column id="C11" width="auto" demandPopin="false" minScreenWidth="Tablet" visible="true"
+											customData:p13nData='\{"leadingProperty":"Num", "columnKey":"Num"}' class="myStyle">
+											<Text text="N." id="nameColumnTitle11"/>
+										</Column>
+										<Column id="C22" width="auto" visible="true"
+											customData:p13nData='\{"leadingProperty":"CompId", "columnKey":"CompId"}'>
+											<Text text="File name" id="nameColumnTitle22"/>
+										</Column>
+										
+										
+										
+											<Column id="C24" width="auto" demandPopin="true" minScreenWidth="Tablet" visible="true"
+											customData:p13nData='\{"leadingProperty":"Descript", "columnKey":"Descript"}'>
+											<Text text="Description" id="nameColumnTitle24"/>
+										</Column>
+										
+											<Column id="C25" width="auto"  visible="true"
+											customData:p13nData='\{"leadingProperty":"CreaUser", "columnKey":"CreaUser"}'>
+											<Text text="Created by" id="nameColumnTitle25"/>
+										</Column>
+										
+											<Column id="C26" width="auto" demandPopin="true" minScreenWidth="Tablet" visible="true"
+											customData:p13nData='\{"leadingProperty":"Date", "columnKey":"Date"}'>
+											<Text text="Date" id="nameColumnTitle26"/>
+										</Column>
+										
+										
+										
+										
+									</columns>
+									<items>
+									<!--	<ColumnListItem type="Active"> -->
+										<ColumnListItem  id="list" type="Navigation" press="handleLineItemPress" >	
+											
+
+											
+										<cells>
+												
+											</cells>
+											
+											<cells>
+												<ObjectIdentifier title="{Num}"/>
+											</cells>
+											
+											<cells>
+												<ObjectIdentifier title="{CompId}"/>
+											</cells>
+										
+											
+											<cells>
+												<ObjectIdentifier title="{Descript}"/>
+											</cells>
+											
+											<cells>
+												<ObjectIdentifier title="{CreaUser}"/>
+											</cells>
+											
+											<cells>
+												<ObjectIdentifier title="{Date}"/>
+											</cells>
+
+										</ColumnListItem>
+									</items>
+								</Table>
+								<smartTable:layoutData>
+									<FlexItemData growFactor="1" baseSize="0%"/>
+								</smartTable:layoutData>
+							</smartTable:SmartTable> 
+						</Panel>
+					
 					</content>
 				
 						
 				</IconTabFilter>
 				
-				
+	
 				<IconTabFilter key="3" icon="sap-icon://comment" text="Comments">
 					<content>
 	<html:div style="text-align:center">
 <Button text="Add comment" icon="sap-icon://post" press="shareAddComment" type="Emphasized"/>
 </html:div>
+
 	<List id="commentList"
 		showSeparators="Inner"
 	    items="{/NoteSet}"
@@ -232,6 +337,7 @@
 			iconDensityAware="false"
 			text="{Testo}"/>
 		</items>
+
 	</List>
 	    			</content>
 				</IconTabFilter>
