@@ -33,7 +33,9 @@
 				<IconTabFilter key="1" icon="sap-icon://hint" text="Informations">
 
 					<content>
-	
+	<html:br>
+		
+	</html:br>
 						<Panel id="panel" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="true">
 							<headerToolbar>
 								<Toolbar height="auto">
@@ -202,7 +204,7 @@
 						
 					<content>
 							
-								<Panel id="panel_doc" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
+					<Panel id="panel_doc" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
 							<headerToolbar>
 								<Toolbar height="auto">
 									<Title text="Document"/>
@@ -216,10 +218,9 @@
 									  	<OverflowToolbarLayoutData moveToOverflow="false" />
 									  </layoutData>
 							  </Button>
-						</html:div>
-						
+						 </html:div>
 
-							</Panel>
+						</Panel>
 							
 						<Panel id="panel3" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
 							<headerToolbar>
@@ -319,26 +320,34 @@
 	
 				<IconTabFilter key="3" icon="sap-icon://comment" text="Comments">
 					<content>
-	<html:div style="text-align:center">
-<Button text="Add comment" icon="sap-icon://post" press="shareAddComment" type="Emphasized"/>
-</html:div>
-
-	<List id="commentList"
-		showSeparators="Inner"
-	    items="{/NoteSet}"
-	    noDataText="Nothing to show"
-        backgroundDesign="Translucent">
-		<items>
-		<FeedListItem
-		    sender="{Sender}"
-		    timestamp="{Data}, {Ora}"
-		    info="{Descrizione}"
-			icon="sap-icon://employee"
-			iconDensityAware="false"
-			text="{Testo}"/>
-		</items>
-
-	</List>
+						
+						<Panel id="panel_comment" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
+							<headerToolbar>
+								<Toolbar height="auto">
+									<Title text="Comments"/>
+								</Toolbar>
+							</headerToolbar>
+								<html:div style="text-align:center">
+							<Button text="Add comment" icon="sap-icon://post" press="shareAddComment" type="Emphasized"/>
+							</html:div>
+                       </Panel>
+                       
+							<List id="commentList"
+								showSeparators="Inner"
+							    items="{/NoteSet}"
+							    noDataText="Nothing to show"
+						        backgroundDesign="Translucent">
+								<items>
+								<FeedListItem
+								    sender="{Sender}"
+								    timestamp="{Data}, {Ora}"
+								    info="{Descrizione}"
+									icon="sap-icon://employee"
+									iconDensityAware="false"
+									text="{Testo}"/>
+								</items>
+						
+							</List>
 	    			</content>
 				</IconTabFilter>
 				

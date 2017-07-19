@@ -69,13 +69,13 @@ Per richiamare il file di stile CSS è stata aggiunta una include al component.j
 }
 
 #application-Zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
-#application-zworkflow-display-component---object--Attach_table-listUl tbody tr:not(.sapMListTblSubRow) td,
+#application-Zworkflow-display-component---object--Attach_table-listUl tbody tr:not(.sapMListTblSubRow) td,
 #application-Zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td {
     border-top: 1pt solid rgba(40, 105, 227, 0.6);
 }
 
 #application-Zworkflow-display-component---object--Table2-listUl,
-#application-zworkflow-display-component---object--Attach_table-listUl,
+#application-Zworkflow-display-component---object--Attach_table-listUl,
 #application-Zworkflow-display-component---object--Table3-listUl {
     border: 1px solid rgba(40, 105, 227, 0.6);
 }
@@ -101,7 +101,7 @@ td[aria-describedby = application-Zworkflow-display-component---object--nameColu
 #application-Zworkflow-display-component---object--btn4-inner {
     cursor: pointer;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 0px;
     position: relative;
 }
 
