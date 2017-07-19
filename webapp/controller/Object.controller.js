@@ -103,7 +103,10 @@ OData.request
 			var sSelectedTaskid;
 			var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
 			//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
-			sButtonComment = sap.ui.getCore().byId("__button9").getId();
+			if(this.Comment){
+			sButtonComment = sap.ui.getCore().byId("buttonOk").getId();
+			}
+
 
 			oView = this.getView();
 			var oObject = oView.getBindingContext().getObject();
@@ -121,8 +124,7 @@ OData.request
 			sButtonId = oEvent.getSource().getId();
 
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-			if (sButtonId == sButtonComment ||
-				sButtonId == sap.ui.getCore().byId("__button8").getId()) {
+			if (sButtonId == sButtonComment) {
 
 				var sTask, sProcid, sComment;
 				sTask = oObject.ZWfTaskid;

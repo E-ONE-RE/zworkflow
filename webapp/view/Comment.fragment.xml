@@ -13,10 +13,10 @@
 		/>
 		</content> 
 		<beginButton>
-			<Button icon="sap-icon://save" text="Save" press="actionTask"/>
+			<Button id="buttonOk" icon="sap-icon://save" text="Save" press="actionTask"/>
 		</beginButton>
 		<endButton>
-			<Button text="Close" press="closeDialog"/>
+			<Button id="buttonKo" text="Close" press="closeDialog"/>
 		</endButton>
 	</Dialog>
 </core:FragmentDefinition>
