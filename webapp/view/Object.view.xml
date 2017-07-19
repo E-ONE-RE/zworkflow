@@ -191,6 +191,7 @@
 								</smartTable:layoutData>
 							</smartTable:SmartTable>
 						</Panel>
+
 					</content>
 				</IconTabFilter>
 			
@@ -253,19 +254,9 @@
 								</smartTable:layoutData>
 							</smartTable:SmartTable> 
 						</Panel>
-	    			</content>
-				</IconTabFilter>
-
-			</items>
-		</IconTabBar>
-		
-	<FeedInput
-	id="feed"
-		post="onPost"
-		icon="sap-icon://employee"
-		class="sapUiSmallMarginTopBottom"
-		placeholder="Add a comment here..."
-		/>
+	<html:div style="text-align:center">
+<Button text="Add comment" icon="sap-icon://post" press="shareAddComment" type="Emphasized"/>
+</html:div>
 	<List id="commentList"
 		showSeparators="Inner"
 	    items="{/NoteSet}"
@@ -281,6 +272,15 @@
 			text="{Testo}"/>
 		</items>
 	</List>
+
+	    			</content>
+				</IconTabFilter>
+				
+
+			</items>
+		</IconTabBar>
+		
+
 
 	
                  <!-- <ComboBox items="{
