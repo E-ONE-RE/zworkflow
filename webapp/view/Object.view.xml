@@ -194,29 +194,7 @@
 								</smartTable:layoutData>
 							</smartTable:SmartTable>
 						</Panel>
-						
-					<FeedInput
-					id="feed"
-						post="onPost"
-						icon="sap-icon://employee"
-						class="sapUiSmallMarginTopBottom"
-						placeholder="Add a comment here..."
-						/>
-					<List id="commentList"
-						showSeparators="Inner"
-					    items="{/NoteSet}"
-					    noDataText="Nothing to show"
-				        backgroundDesign="Translucent">
-						<items>
-						<FeedListItem
-						    sender="{Sender}"
-						    timestamp="{Data}, {Ora}"
-						    info="{Descrizione}"
-							icon="sap-icon://employee"
-							iconDensityAware="false"
-							text="{Testo}"/>
-						</items>
-					</List>
+
 					</content>
 				</IconTabFilter>
 			
@@ -240,6 +218,7 @@
 							  </Button>
 						</html:div>
 						
+
 							</Panel>
 							
 						<Panel id="panel3" width="auto" class="sapUiResponsiveMargin" backgroundDesign="Transparent" expandable="false">
@@ -337,23 +316,13 @@
 						
 				</IconTabFilter>
 				
-				
-				<IconTabFilter key="3" icon="sap-icon://attachment" text="Attachments">
+	
+				<IconTabFilter key="3" icon="sap-icon://comment" text="Comments">
 					<content>
-						
-	    			</content>
-				</IconTabFilter>
+	<html:div style="text-align:center">
+<Button text="Add comment" icon="sap-icon://post" press="shareAddComment" type="Emphasized"/>
+</html:div>
 
-			</items>
-		</IconTabBar>
-		
-<!--	<FeedInput
-	id="feed"
-		post="onPost"
-		icon="sap-icon://employee"
-		class="sapUiSmallMarginTopBottom"
-		placeholder="Add a comment here..."
-		/>
 	<List id="commentList"
 		showSeparators="Inner"
 	    items="{/NoteSet}"
@@ -368,7 +337,16 @@
 			iconDensityAware="false"
 			text="{Testo}"/>
 		</items>
-	</List>-->
+
+	</List>
+	    			</content>
+				</IconTabFilter>
+				
+
+			</items>
+		</IconTabBar>
+		
+
 
 	
                  <!-- <ComboBox items="{
