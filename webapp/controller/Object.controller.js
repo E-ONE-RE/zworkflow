@@ -482,7 +482,7 @@ OData.request
 			var oObject = oView.getBindingContext().getObject();
 			var oModel = this.getModel();
 
-			var sRead = "/PdfdocSet(ZWfProci='" + oObject.ZWfProcid + "',ZWfTaskid='" + oObject.ZWfTaskid + "',ZWfDocument='" + oObject.ZWfDocument + "',ZWfTipodoc='" + oObject.ZWfTipodoc + "')";
+			var sRead = "/PdfdocSet(ZWfProcid='" + oObject.ZWfProcid + "',ZWfTaskid='" + oObject.ZWfTaskid + "',ZWfDocument='" + oObject.ZWfDocument + "',ZWfTipodoc='" + oObject.ZWfTipodoc + "')";
 			   
 				oModel.read( sRead, {
 				 
