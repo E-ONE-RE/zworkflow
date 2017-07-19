@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"Workflow/model/formatter"
-], function(BaseController, JSONModel, History, formatter, MessageToast, Button, Dialog, Input, Label, SuggestionItems, Item, Template) {
+], function(BaseController, JSONModel, History, formatter, MessageToast, MessageStrip, 	MessageBox, Button, Dialog, Input, Label, SuggestionItems, Item, Template) {
 	"use strict";
 	
 	
@@ -200,7 +200,13 @@ function fnE(oError){
 				   	// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
 				   	if (oData.Type == "S" )
 				   	   {
-			alert("Success: "+oData.Message);
+				   	   	 var msg = "Success: "+oData.Message;
+        					sap.m.MessageToast.show(msg, { duration: 5000,
+        					autoClose: true,
+        					 closeOnBrowserNavigation: false
+        						
+        					});
+					//	alert("Success: "+oData.Message);
 			
 			/** MP
 			 *  Recupero il prefisso che viene messo di default alle viste nell'app.
@@ -217,9 +223,19 @@ function fnE(oError){
 				   	   }
 				   	   
 					else { 
-					 //richiama una funzione di Object.Controller con questa sintassi
 			
-							alert("Error: "+oData.Message); 
+					//		alert("Error: "+oData.Message); 
+							
+						jQuery.sap.require("sap.m.MessageBox");
+			            sap.m.MessageBox.show(
+					      "Error: "+oData.Message, {
+					          icon: sap.m.MessageBox.Icon.WARNING,
+					          title: "Error",
+					          actions: [sap.m.MessageBox.Action.CLOSE]
+					          
+					      }
+					    );
+					    
 						 }
 					
 				   }
@@ -393,15 +409,120 @@ OData.request
 		},
 
 
-        // evento button per apertura pdf odc (SE)
-		onOpenDoc: function(oEvent) {
+        // evento button per apertura pdf odc (SE) per visualizzazione embedded in view DOC
+	/*	onOpenDoc: function(oEvent) {
 			// The source is the list item that got pressed
 			this._showObject(oEvent.getSource());
-		},
+		},*/
 		
+		 // evento button per apertura pdf odc (SE) per apertura diretta
+		onOpenDoc: function(oEvent) {
+			//var OData = new sap.ui.mode.odata.ODataModel(); 
+		    //jQuery.sap.require("sap.ui.model.odata.datajs");
+			var service = "http://10.126.72.12:50040";
+			var oView = this.getView();
+			var oObject = oView.getBindingContext().getObject();
+			var oModel = this.getModel();
 
+			var sRead = "/PdfdocSet(ZWfProci='" + oObject.ZWfProcid + "',ZWfTaskid='" + oObject.ZWfTaskid + "',ZWfDocument='" + oObject.ZWfDocument + "',ZWfTipodoc='" + oObject.ZWfTipodoc + "')";
+			   
+				oModel.read( sRead, {
+				 
+				 	success: function (oData) {
+				 		console.log(oData); 
+				               window.open(service + oData.url, '_blank');
+							//	win.focus();
+					},
+				
+				/*	error: function(){
+			            alert("No document available");
+					}*/
+				
+					error: function() {
+						jQuery.sap.require("sap.m.MessageBox");
+			            sap.m.MessageBox.show(
+					      "Error: No document available", {
+					          icon: sap.m.MessageBox.Icon.WARNING,
+					          title: "Error",
+					          actions: [sap.m.MessageBox.Action.CLOSE]
+					          
+					      }
+					    );
+					}	    
+					/*	error: function() {
+						
+						jQuery.sap.require("sap.m.MessageBox");
+			            sap.m.MessageBox.show(
+					      "This message should appear in the message box.", {
+					          icon: sap.m.MessageBox.Icon.INFORMATION,
+					          title: "My message box title",
+					          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO]
+					          
+					      }
+					    );
+			    
+						}*/
+	
+				});
+			            
+		},	
 		
+		//event for attachments
+  /*     onItemPress: function(){
+          var msg = "This is a test of itemPress!";
+          sap.m.MessageToast.show(msg);
+    },*/
+    
+    //non utilizzata
+       onItemPress: function(oEvent){
+       	
+		       	 oEvent.getSource().getBindingContext().getProperty("Num");
+		       	 //Give the row data which are visible in the screen 
+		 //var oSelectedItem = sap.ui.getCore().byId("Attach_table").getSelectedItems(); 
+		  
+		//       	this.byId("Attach_table").getTable().attachItemPress(this.handleRowPress);
+		//          var msg = "This is a test of itemPress!";
+		//          sap.m.MessageToast.show(msg);
+    },
+    
+    //evento per apertura allegati
+    handleLineItemPress : function(evt) {
+	    //console.log('evt.getSource: ' + evt.getSource());
+	    //console.log('evt.getBindingContext: ' + evt.getSource().getBindingContext());
+		//var oItem = evt.getParameter("Num").getBindingContext().getObject();
+		//NB: if using standard sap.ui.table.Table, use: 
+		var oItem = evt.getSource().getBindingContext().getObject(); 
+		//console.log(oItem); //prints the JSON for your selected table row
+	 
+		  var oView = this.getView();
+		  var oObject = oView.getBindingContext().getObject();
+		  var oModel = this.getModel();
+				
+		  var sRead = "/PDFSet(PDoc='" + oObject.ZWfDocument + "',PProc='" + oObject.ZWfProcesso + "',PDocCount='" + oItem.Num + "')" + "/$value" ;
+		   
+		//   window.open("http://10.126.72.12:50040/sap/opu/odata/SAP/ZWORKFLOW_SRV" + sRead );
+		   var url = "http://10.126.72.12:50040/sap/opu/odata/SAP/ZWORKFLOW_SRV";
+		   var url2 = url + sRead;
+		   //window.open(url2);
+		   
+		   var win=window.open(url2, '_blank');
+		   win.focus();
+   
+   
+			//   jQuery.sap.require("sap.m.URLHelper");
+			
+			//   sap.m.URLHelper.redirect("http://10.126.72.12:50040/sap/opu/odata/SAP/ZWORKFLOW_SRV" + sRead, true);
+			  
+			 /*      oModel.read( sRead, null, null, true, function(oData, oResponse){
+			                     var pdfURL = oResponse.requestUri;            
+			  //          html.setContent("<iframe src=" + pdfURL + " width='700' height='700'></iframe>");
+			               
+			        },function(){
+			            alert("Read failed");});*/
+  
+     },
 		
+	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
