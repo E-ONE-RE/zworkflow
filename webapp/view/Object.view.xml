@@ -14,6 +14,8 @@
 
 	<Page navButtonPress="onNavBack" showNavButton="true" title="{i18n>objectTitle}" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}" floatingFooter="true">
+
+
 	
 
 	<ObjectHeader id="objHead" responsive="true" title="Task {ZWfTaskid}" icon="sap-icon://activity-individual" intro="Currently running in process {ZWfProcid}" 
@@ -236,7 +238,7 @@
 								header="Attachments" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="TaskToAtt"
 								class="sapUiResponsiveContentPadding">
 							<!--	<Table id="Attach_table" width="auto" itemPress="onItemPress" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
-							-->	<Table id="Attach_table" width="auto"  class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+							-->	<Table id="Attach_table" width="auto"  class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent"  noDataText="{i18n>attachmentTableNoData}">
 								
 								
 								<columns>
