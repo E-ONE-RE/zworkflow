@@ -60,6 +60,19 @@ sap.ui.define([
 				// Restore original busy indicator delay for worklist's table
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 			});
+			
+			/// SE refresh ogni 10 minuti tabella taskset
+			setInterval(function(){
+     		oTable.getBinding("items").refresh();
+     		
+     		 var msg = "Updating..";
+        					sap.m.MessageToast.show(msg, { duration: 3000,
+        					autoClose: true,
+        					 closeOnBrowserNavigation: true
+        					});
+        					
+    		},600000);
+    		               
 		},
 
 		/* =========================================================== */
