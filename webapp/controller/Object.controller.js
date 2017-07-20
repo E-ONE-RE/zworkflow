@@ -455,6 +455,16 @@ OData.request
 		 * @public
 		 */
 		onNavBack: function() {
+			
+			////////SE su pressione tasto back faccio refresh tabella taskset
+			var oView, oViewW;
+			oView = this.getView();
+			var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
+					oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
+					var oTable = oViewW.byId("table");
+					oTable.getBinding("items").refresh();
+			////////		
+					
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
 			if (sPreviousHash !== undefined) {
