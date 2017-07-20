@@ -4,8 +4,8 @@ displayBlock="true"
 xmlns="sap.m"
 xmlns:html="http://www.w3.org/1999/xhtml">
 	
-	<App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}"
-	backgroundImage= "https://www.prismglobalmarketing.com/hubfs/MarCom.jpg?t=1493052615745"
-	backgroundOpacity="0.3"/>
+	<App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}" 
+	backgroundImage="http://www.fcnews.net/wp-content/uploads/2013/06/floridaTile-940x520.jpg"
+	backgroundOpacity="0.1"/>
 	
 </mvc:View>
