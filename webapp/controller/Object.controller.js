@@ -454,8 +454,9 @@ OData.request
 		 * If not, it will replace the current entry of the browser history with the worklist route.
 		 * @public
 		 */
-		onNavBack: function() {
+		onNavBack: function(oEvent) {
 			
+			if(oEvent){
 			////////SE su pressione tasto back faccio refresh tabella taskset
 			var oView, oViewW;
 			oView = this.getView();
@@ -463,7 +464,8 @@ OData.request
 					oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
 					var oTable = oViewW.byId("table");
 					oTable.getBinding("items").refresh();
-			////////		
+			////////
+			}
 					
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
