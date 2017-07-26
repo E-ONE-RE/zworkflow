@@ -456,7 +456,7 @@ OData.request
 		 */
 		onNavBack: function(oEvent) {
 			
-			if(oEvent){
+			if(oEvent && oView!=undefined){
 			////////SE su pressione tasto back faccio refresh tabella taskset
 			var oView, oViewW;
 			oView = this.getView();
