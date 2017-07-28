@@ -502,7 +502,10 @@ OData.request
 				 
 				 	success: function (oData) {
 				 		console.log(oData); 
-				               window.open(service + oData.url, '_blank');
+				               if(!window.open(service + oData.url, '_blank')){
+							   alert("Popup blocked, please allow popup opening from your browser settings.");		                
+        
+							   }
 							//	win.focus();
 					},
 				
