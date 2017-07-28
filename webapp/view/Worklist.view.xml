@@ -9,6 +9,14 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 	showNavButton="true"
 	title="{i18n>worklistViewTitle}"
 	floatingFooter="true">
+		
+<headerContent>
+            <Button
+                icon="sap-icon://synchronize"
+                press="onClickRefresh" 
+                type="Emphasized"/>
+  </headerContent>
+  
 		<content>
 			<IconTabBar
 				id="iconTab"

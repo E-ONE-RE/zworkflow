@@ -1,0 +1,111 @@
+#application-zworkflow-display-component---doc--map_iframe {
+    width: 99%;
+    height: 99%;
+    seamless: seamless;
+    padding: 0;
+    frameborder: 0px;
+    -webkit-overflow-scrolling: auto;
+}
+
+
+#application-zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
+#application-zworkflow-display-component---object--Attach_table-listUl tbody tr:not(.sapMListTblSubRow) td,
+#application-zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td {
+    border-top: 1pt solid rgba(40, 105, 227, 0.6);
+}
+
+#application-zworkflow-display-component---object--Table2-listUl,
+#application-zworkflow-display-component---object--Attach_table-listUl,
+#application-zworkflow-display-component---object--Table3-listUl {
+    border: 1px solid rgba(40, 105, 227, 0.6);
+}
+
+td[aria-describedby = application-zworkflow-display-component---object--nameColumnTitle9] {
+    font-style: italic;
+}
+
+#application-zworkflow-display-component---object--iconTab2--header-head {
+    display: table;
+    margin: 0 auto;
+}
+
+#application-zworkflow-display-component---object--btn3-inner {
+    background-color: #ff9800;
+    cursor: pointer;
+}
+
+#application-zworkflow-display-component---object--btn3-inner:hover {
+    background-color: #ce7b02;
+}
+
+#application-zworkflow-display-component---object--btn4-inner {
+    cursor: pointer;
+    text-align: center;
+    margin-top: 0px;
+    position: relative;
+}
+
+
+#application-zworkflow-display-component---object--footerToolbar{
+	position:fixed;
+}
+
+
+
+/* MP
+Quando l'applicazione viene deployata, nell'id dell'elemento "zworkflow" viene modificato in "Zworkflow".
+La parte che segue è diversa da quella sopra in quanto tiene conto di questo cambiamento ed è valida nel 
+caso in cui l'applicazione stia girando sul server e non in locale. 
+Per richiamare il file di stile CSS è stata aggiunta una include al component.js.
+*/
+
+#application-Zworkflow-display-component---doc--map_iframe {
+    width: 99%;
+    height: 99%;
+    seamless: seamless;
+    padding: 0;
+    frameborder: 0px;
+    -webkit-overflow-scrolling: auto;
+}
+
+#application-Zworkflow-display-component---object--Table2-listUl tbody tr:not(.sapMListTblSubRow) td,
+#application-Zworkflow-display-component---object--Attach_table-listUl tbody tr:not(.sapMListTblSubRow) td,
+#application-Zworkflow-display-component---object--Table3-listUl tbody tr:not(.sapMListTblSubRow) td {
+    border-top: 1pt solid rgba(40, 105, 227, 0.6);
+}
+
+#application-Zworkflow-display-component---object--Table2-listUl,
+#application-Zworkflow-display-component---object--Attach_table-listUl,
+#application-Zworkflow-display-component---object--Table3-listUl {
+    border: 1px solid rgba(40, 105, 227, 0.6);
+}
+
+td[aria-describedby = application-Zworkflow-display-component---object--nameColumnTitle9] {
+    font-style: italic;
+}
+
+#application-Zworkflow-display-component---object--iconTab2--header-head {
+    display: table;
+    margin: 0 auto;
+}
+
+#application-Zworkflow-display-component---object--btn3-inner {
+    background-color: #ff9800;
+    cursor: pointer;
+}
+
+#application-Zworkflow-display-component---object--btn3-inner:hover {
+    background-color: #ce7b02;
+}
+
+#application-Zworkflow-display-component---object--btn4-inner {
+    cursor: pointer;
+    text-align: center;
+    margin-top: 0px;
+    position: relative;
+}
+
+
+#application-Zworkflow-display-component---object--footerToolbar{
+	position:fixed;
+}

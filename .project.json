@@ -33,6 +33,9 @@
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
+  },
+  "deploy": {
+    "destination": "ECD",
+    "name": "ZWF_TEST"
   }
-
 }

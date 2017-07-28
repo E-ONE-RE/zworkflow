@@ -12,6 +12,7 @@
 		horizontalScrolling="false">
 		<content>
 			<ComboBox
+			id="combo"
 			width="auto"
 			class="sapUiResponsiveMargin"
 				items="{
@@ -20,7 +21,8 @@
 					suspended: true
 				}"
 				loadItems="lazyLoadItems"
-				change="selectionChange">
+				change="selectionChange"
+				placeholder="Search by surname...">
 				<core:ListItem key="{Uname}" text="{Name2} {Name1}"/>
 			</ComboBox>
 		</content>
@@ -34,7 +36,7 @@
 			   <Button
 			        type="Reject"
 					text="Cancel"
-					press="onCancel"/>
+					press="closePopover"/>
 			</Toolbar>
 		</footer>
 		</Popover>
