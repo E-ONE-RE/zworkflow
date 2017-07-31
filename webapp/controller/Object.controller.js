@@ -96,252 +96,171 @@ OData.request
 					},
 		  */
 		/////////////////////////////////////////////////////////////////////  
-		actionTask: function(oEvent) {
+		actionTask: function() {
 
-			var sButtonId, sButtonComment;
+			var sButtonId;
+			var sTypeAction;
 			var oView, oViewW;
 			var sSelectedTaskid;
 			var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
 			//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
-			if(this.Comment){
-			sButtonComment = sap.ui.getCore().byId("buttonOk").getId();
-			}
-
-
+			
 			oView = this.getView();
 			var oObject = oView.getBindingContext().getObject();
-
+		
+            ////////////////////////////////// (SE)
+            //START - MOVE ACTION POPOVER CHECK 
 			if (this._oPopover) {
 				this._oPopover.close();
 				sap.ui.getCore().byId("combo").setValue("");
 				sUname = this.sKey;
-			}
-
-			if (this.Dialog) {
-				this.Dialog.close();
-			}
-
-			sButtonId = oEvent.getSource().getId();
-
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-			if (sButtonId == sButtonComment) {
-
-				var sTask, sProcid, sComment;
-				sTask = oObject.ZWfTaskid;
-				sProcid = oObject.ZWfProcid;
-				sComment = sap.ui.getCore().byId("feed").getValue();
-
-				if (sComment != "") {
-					var oUrlParams = {
-						ZWfTaskid: sTask,
-						ZWfProcid: sProcid,
-						ZWfComment: sComment
-					};
-
-					var oModel = this.getModel();
-					oModel.callFunction("/ZWfPostComment", {
-						method: "POST",
-						urlParameters: oUrlParams,
-
-						success: function(oData, oResponse) {
-							jQuery.sap.require("sap.m.MessageBox");
-							sap.m.MessageBox.show("The comment has been successfully published.", {
-								icon: sap.m.MessageBox.Icon.SUCCESS,
-								title: "Success",
-								onClose: null,
-								styleClass: "sapUiSizeCompact",
-								initialFocus: null,
-								textDirection: sap.ui.core.TextDirection.Inherit,
-								contentWidth: "100px"
-							});
-						},
-
-						error: function(oError) {
-							jQuery.sap.require("sap.m.MessageBox");
-							sap.m.MessageBox.show("Something went wrong! Please try to post the comment later.", {
-								icon: sap.m.MessageBox.Icon.ERROR,
-								title: "Error",
-								onClose: null,
-								styleClass: "sapUiSizeCompact",
-								initialFocus: null,
-								textDirection: sap.ui.core.TextDirection.Inherit,
-								details: 'Possible reasons:\n' +
-									'You are not connected to the internet, ' +
-									'a backend component is not available ' +
-									'or an underlying system is down. ' +
-									'Please contact your system administrator to get more informations.',
-								contentWidth: "100px"
-							});
-						}
-
-					});
-					var oCommentList = oView.byId("commentList");
-					oCommentList.getBinding("items").refresh();
-					this.Comment.setState("None");
-					this.Comment.setTitle("");
-					this.Comment.close();
-					sap.ui.getCore().byId("feed").setValue("");
-
-				} else {
-
-					this.Comment.setState("Error");
-					this.Comment.setTitle("You should add a comment to save!");
-
-				}
-
-			} else {
-
-				sButtonId = this.sButtonKey;
-
-				/** MP
-				 * La forma oView.byId(<sID statico>).getId() è importante da mantenere
-				 * in quanto una volta che l'applicazione è deployata ed eseguita sul server
-				 * il prefisso dell'id statico cambia. Referenziando il controllo con il suo 
-				 * id staticoutilizzando questa forma fa si che il controllo e la logica 
-				 * applicata ad esso o a partire da azioni su di esso non cambi in dipendenza 
-				 * dell'ambiente di esecuzione e del prefisso applicato. 
-				 * FORMA PRECEDENTE: (sButtonId == "application-zworkflow-display-component---object--btn1") 
-				 */
-				if (sButtonId == oView.byId("btn1").getId()) {
-					sAction = "OK";
-					sUname = undefined;
-				} else if (sButtonId == oView.byId("btn2").getId()) {
-					sAction = "KO";
-					sUname = undefined;
-				}
-
-				sUser = "";
-				if (sUname != undefined) {
-					sAction = "MOVE";
-					sUser = sUname;
-				}
-
-				//recupero taskid (SE)
-
-				sSelectedTaskid = oObject.ZWfTaskid;
-
-				// al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
-				//una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
-				// che richiedono la scelta di un nuovo processo da far partire
-
-				//trovo il task id andando a vedere il routing path ricavando la stringa con substring e indexOf
-				//sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
-				//////////////////////////////////////////
-
-				//if (aSelectedTaskid.length) 
-				//{
-				//for (i = 0; i < aSelectedTaskid.length; i++) 
-				//{
-				//oTask = aSelectedTaskid[i];
-
-				///////////////////////////////////////////
-				// recupero il taskid selezionato
-				//oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
-				var oUrlParams = {
-					//ZWfTaskid : "0000025000",
-					ZWfTaskid: sSelectedTaskid, //modificato passando la stringa come parametro
-					ZWfActionType: sAction,
-					ZWfUser: sUser
-				};
-				//var oView = this.getView();
-				//oModel = this.getModel(),
-				var oModel = this.getModel();
-				// lancio la function import creata sull'odata
-				oModel.callFunction("/ZWfAction", {
-					method: "POST",
-					urlParameters: oUrlParams,
-					success: fnS,
-					error: fnE
-				});
-
-				//}
-
-				//}	
-
-			}
-
-			function fnS(oData, response) {
-				console.log(oData);
-				console.log(response);
-
-				// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
-				if (oData.Type == "S") {
-					var msg = "Success: "+oData.Message;
-        					sap.m.MessageToast.show(msg, { duration: 5000,
-        					autoClose: true,
-        					 closeOnBrowserNavigation: false
-        						
-        					});
-					//	alert("Success: "+oData.Message);
-					/** MP
-					 *  Recupero il prefisso che viene messo di default alle viste nell'app.
-					 *  Stesso discorso fatto sopra per i bottoni. Piuttosto che avere il 
-					 *  prefisso statico dichiarato me lo ricavo. In questo modo l'applicazione
-					 *  svolge le correttamente le funzionalità indipendentemente dall'ambiente
-					 *  di run.
-					 */
-					var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
-					oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
-					var oTable = oViewW.byId("table");
-					oTable.getBinding("items").refresh();
-					sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
-				} else {
-					//richiama una funzione di Object.Controller con questa sintassi
-
-							//		alert("Error: "+oData.Message); 
-							
-						jQuery.sap.require("sap.m.MessageBox");
+			//	this.sButtonKey = undefined; //SE 31072017 ripulisco variabile OK-KO in caso di MOVE
+				
+				if (sUname == undefined || sUname == "")   {
+					
+				jQuery.sap.require("sap.m.MessageBox");
 			            sap.m.MessageBox.show(
-					      "Error: "+oData.Message, {
-					          icon: sap.m.MessageBox.Icon.WARNING,
+					      "Error: Please, select a valid user", {
+					          icon: sap.m.MessageBox.Icon.ERROR,
 					          title: "Error",
 					          actions: [sap.m.MessageBox.Action.CLOSE]
-					          
 					      }
 					    );
+					    return; // se popover è in errore termino la function
 				}
-
 			}
-
-			function fnE(oError) {
-				console.log(oError);
-
-				alert("Error in read: " + oError.message);
+			////// END - MOVE ACTION POPOVER CHECK
+			
+			/////////////////////////////////// (SE)
+			//START - APPROVE-REJECT ACTION DIALOG CHECK 
+			if (this.Dialog) {
+				this.Dialog.close();
+			
 			}
+            ////// END - MOVE ACTION POPOVER CHECK
+            
+
+						sButtonId = this.sButtonKey;
+		
+						/** MP
+						 * La forma oView.byId(<sID statico>).getId() è importante da mantenere
+						 * in quanto una volta che l'applicazione è deployata ed eseguita sul server
+						 * il prefisso dell'id statico cambia. Referenziando il controllo con il suo 
+						 * id staticoutilizzando questa forma fa si che il controllo e la logica 
+						 * applicata ad esso o a partire da azioni su di esso non cambi in dipendenza 
+						 * dell'ambiente di esecuzione e del prefisso applicato. 
+						 * FORMA PRECEDENTE: (sButtonId == "application-zworkflow-display-component---object--btn1") 
+						 */
+						 
+						 sUser  = "";
+						 sAction = undefined;
+						 
+						 sTypeAction = undefined;
+						if (sButtonId == oView.byId("btn1").getId()) {
+							sAction = "OK";
+							sTypeAction = "Task approved";
+							sUname = undefined;
+						} else if (sButtonId == oView.byId("btn2").getId()) {
+							sAction = "KO";
+							sTypeAction = "Task rejected";
+							sUname = undefined;
+						//(SE)
+				    	} else if ((sButtonId == oView.byId("btn3").getId()) && (sUname != undefined))  {
+						    sAction = "MOVE";
+						    sTypeAction = "Task moved";
+							sUser = sUname;
+						}
+		
+						//recupero taskid (SE)	
+						sSelectedTaskid = oObject.ZWfTaskid;
+		
+						// al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
+						//una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
+						// che richiedono la scelta di un nuovo processo da far partire
+		
+						//trovo il task id andando a vedere il routing path ricavando la stringa con substring e indexOf
+						//sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
+						//////////////////////////////////////////
+		
+						//if (aSelectedTaskid.length) 
+						//{
+						//for (i = 0; i < aSelectedTaskid.length; i++) 
+						//{
+						//oTask = aSelectedTaskid[i];
+		
+						///////////////////////////////////////////
+						// recupero il taskid selezionato
+						//oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
+						var oUrlParams = {
+							//ZWfTaskid : "0000025000",
+							ZWfTaskid: sSelectedTaskid, //modificato passando la stringa come parametro
+							ZWfActionType: sAction,
+							ZWfUser: sUser
+						};
+						//var oView = this.getView();
+						//oModel = this.getModel(),
+						var oModel = this.getModel();
+						// lancio la function import creata sull'odata
+						oModel.callFunction("/ZWfAction", {
+							method: "POST",
+							urlParameters: oUrlParams,
+							success: fnS,
+							error: fnE
+						});
+		
+
+					function fnS(oData, response) {
+						console.log(oData);
+						console.log(response);
+		
+						// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
+						if (oData.Type == "S") {
+							var msg = "Success: "+oData.Message+", "+sTypeAction;
+		        					sap.m.MessageToast.show(msg, { duration: 5000,
+		        					autoClose: true,
+		        					 closeOnBrowserNavigation: false
+		        						
+		        					});
+							//	alert("Success: "+oData.Message);
+							/** MP
+							 *  Recupero il prefisso che viene messo di default alle viste nell'app.
+							 *  Stesso discorso fatto sopra per i bottoni. Piuttosto che avere il 
+							 *  prefisso statico dichiarato me lo ricavo. In questo modo l'applicazione
+							 *  svolge le correttamente le funzionalità indipendentemente dall'ambiente
+							 *  di run.
+							 */
+							var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
+							oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
+							var oTable = oViewW.byId("table");
+							oTable.getBinding("items").refresh();
+							sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
+						} else {
+							//richiama una funzione di Object.Controller con questa sintassi
+		
+									//		alert("Error: "+oData.Message); 
+									
+								jQuery.sap.require("sap.m.MessageBox");
+					            sap.m.MessageBox.show(
+							      "Error: "+oData.Message, {
+							          icon: sap.m.MessageBox.Icon.WARNING,
+							          title: "Error",
+							          actions: [sap.m.MessageBox.Action.CLOSE]
+							          
+							      });
+								  
+								}
+
+					}// END FUNCTION SUCCESS
+
+					function fnE(oError) {
+						console.log(oError);
+		
+						alert("Error in read: " + oError.message);
+					}
+			
 
 		},
-		/////////////////////////////////////////////////////			
 
-		/*						onApproveTask: function() {
-				    var oURLParameters =  {
-		 ZWfTaskid : "0000020832",
-		  ZWfActionType : "OK"
-		  };
-		  this._oModel.callFunction("/ZWfAction", {
-		  method: "POST",
-		  urlParameters: oURLParameters,
-		   success: fnS,
-		  error: fnE
-		  });
-		  
-		  function fnS(){
-		   alert("Success");
-		  }
-		  function fnE(){
-		         alert("Error in read");
-		  }
-		  
-								},*/
-
-		/*	onApproveTask: function() {
-			this.oModel.callFunction("ZWfAction", "POST", null, null, fnS, fnE);
-			function fnS(){
-		   alert("Success");
-		  }
-		  function fnE(){
-		         alert("Error in read");
-		  }		
-		},*/
 
 		/*	onApproveTask: function() {
 		var OData = new sap.ui.mode.odata.ODataModel(); 		
@@ -417,6 +336,90 @@ OData.request
 		oEvent.getSource().getBinding("items").resume();
 		 },*/
 
+/////////////////////////////////////////////////////////////////////  
+		addComment: function(oEvent) {
+
+			var sButtonId, sButtonComment;
+			var oView;
+
+			oView = this.getView();
+			var oObject = oView.getBindingContext().getObject();
+			sButtonId = oEvent.getSource().getId();
+
+			if(this.Comment){
+			sButtonComment = sap.ui.getCore().byId("buttonOk").getId();
+			}
+			
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+			if (sButtonId == sButtonComment) {
+
+				var sTask, sProcid, sComment;
+				sTask = oObject.ZWfTaskid;
+				sProcid = oObject.ZWfProcid;
+				sComment = sap.ui.getCore().byId("feed").getValue();
+
+				if (sComment != "") {
+					var oUrlParams = {
+						ZWfTaskid: sTask,
+						ZWfProcid: sProcid,
+						ZWfComment: sComment
+					};
+
+					var oModel = this.getModel();
+					oModel.callFunction("/ZWfPostComment", {
+						method: "POST",
+						urlParameters: oUrlParams,
+
+						success: function(oData, oResponse) {
+							jQuery.sap.require("sap.m.MessageBox");
+							sap.m.MessageBox.show("The comment has been successfully published.", {
+								icon: sap.m.MessageBox.Icon.SUCCESS,
+								title: "Success",
+								onClose: null,
+								styleClass: "sapUiSizeCompact",
+								initialFocus: null,
+								textDirection: sap.ui.core.TextDirection.Inherit,
+								contentWidth: "100px"
+							});
+						},
+
+						error: function(oError) {
+							jQuery.sap.require("sap.m.MessageBox");
+							sap.m.MessageBox.show("Something went wrong! Please try to post the comment later.", {
+								icon: sap.m.MessageBox.Icon.ERROR,
+								title: "Error",
+								onClose: null,
+								styleClass: "sapUiSizeCompact",
+								initialFocus: null,
+								textDirection: sap.ui.core.TextDirection.Inherit,
+								details: 'Possible reasons:\n' +
+									'You are not connected to the internet, ' +
+									'a backend component is not available ' +
+									'or an underlying system is down. ' +
+									'Please contact your system administrator to get more informations.',
+								contentWidth: "100px"
+							});
+						}
+
+					});
+					var oCommentList = oView.byId("commentList");
+					oCommentList.getBinding("items").refresh();
+					this.Comment.setState("None");
+					this.Comment.setTitle("");
+					this.Comment.close();
+					sap.ui.getCore().byId("feed").setValue("");
+
+				} else {
+
+					this.Comment.setState("Error");
+					this.Comment.setTitle("You should add a comment to save!");
+
+				}
+
+			}
+			
+     },
+     
 		// test per refresh view. non utilizzato al momento (SE)
 		onSelectChanged: function(oEvent) {
 			var key = oEvent.getParameters().key;
@@ -610,7 +613,10 @@ OData.request
 		//Method to show the Popover Fragment
 		showPopover: function(oEvent) {
 			var that = this;
-		
+			this.sKey = undefined; //(SE) ripulisco key popover
+		    this.Dialog = undefined;  //(SE) ripulisco dialog
+		    //this.sButtonKey = undefined; //(SE) ripulisco button del dialog
+		    this.sButtonKey = oEvent.getSource().getId();
 			if (!that._oPopover) {
 
 				that._oPopover = sap.ui.xmlfragment("Workflow.view.Popover", this, "Workflow.controller.Object");
@@ -644,6 +650,8 @@ OData.request
 		//Show confirmation dialog
 		showDialog: function(oEvent) {
 			var that = this;
+			this.sKey = undefined; //(SE) ripulisco key popover
+			this._oPopover = undefined; //(SE) ripulisco popover
 			this.sButtonKey = oEvent.getSource().getId(); //mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
 			if (!that.Dialog) {
 

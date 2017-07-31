@@ -13,7 +13,7 @@
 		/>
 		</content> 
 		<beginButton>
-			<Button id="buttonOk" icon="sap-icon://save" text="Save" press="actionTask"/>
+			<Button id="buttonOk" icon="sap-icon://save" text="Save" press="addComment"/>
 		</beginButton>
 		<endButton>
 			<Button id="buttonKo" text="Close" press="closeDialog"/>
