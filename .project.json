@@ -36,6 +36,6 @@
   },
   "deploy": {
     "destination": "ECD",
-    "name": "ZWF_TEST"
+    "name": "ZWF_TESTV3"
   }
 }
