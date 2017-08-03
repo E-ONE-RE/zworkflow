@@ -629,7 +629,7 @@ OData.request
 			    sap.ui.getCore().byId("combo").setValue("");//Cancella il contenuto del comboBox nel Popover.
 			});
 
- 		 if (sap.ui.Device.system.phone) {
+ 	
 				/** MP
 				 * Su smartphone l'input field non funziona a dovere 
 				 * le seguenti righe di codice servono per disabilitare
@@ -643,7 +643,7 @@ OData.request
 							}
 					}
 				});
-		}
+	
 
 		},
 
@@ -705,7 +705,7 @@ OData.request
 
 		//Method to retrieve the selected key from the comboBox in Popover.fragment.xml		
 		selectionChange: function(oEvent) {
-
+            
 			this.sKey = oEvent.getSource().getProperty("selectedKey");
 			return this.sKey;
 		},
