@@ -167,18 +167,18 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 		<footer>
 			<OverflowToolbar id="footerToolbarWL">
 				<ToolbarSpacer/>
-				 	<Button id="button1" type="Accept" text="Approve" press="showDialog">
+				 	<Button id="button1" type="Accept" text="Approve" press="showDialog" visible="false">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				  </Button>
-				  <Button id="button2" type="Reject" text="Reject" press="showDialog">
+				  <Button id="button2" type="Reject" text="Reject" press="showDialog" visible="false">
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				   </Button>
-				  	<Button id="button3" type="Default" text="Move" press="showPopover">
-
+				  	<Button id="button3" type="Default" text="Move" press="showPopover" visible="false">
+             
 				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
 				</Button>
 						
-	<!--	
+		<!--
 				<ToolbarSpacer/>
 				<Button id="shareButton" tooltip="{i18n>shareTooltip}" icon="sap-icon://action" press="onSharePress">
 					<dependents>
@@ -191,7 +191,8 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 						</ActionSheet>
 					</dependents>
 				</Button> 
-	!-->
+				!-->
+
 			</OverflowToolbar>
 		</footer>
 	</Page>

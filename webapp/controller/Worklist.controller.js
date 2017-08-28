@@ -31,6 +31,21 @@ sap.ui.define([
 				iOriginalBusyDelay,
 				oTable = this.byId("table");
 			this._oTable = oTable;
+				var oButtonf = this.byId("button1");
+				var oButtons = this.byId("button2");
+				var oButtont = this.byId("button3");
+			oTable.attachSelectionChange(function(oEvent){
+					var aItems = oEvent.getSource().getSelectedItems();
+				if (aItems.length > 0){
+		oButtonf.setVisible(true);
+			oButtons.setVisible(true);
+				oButtont.setVisible(true);
+				}else if(aItems.length == 0){
+						oButtonf.setVisible(false);
+			oButtons.setVisible(false);
+				oButtont.setVisible(false);
+				}
+			});
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
