@@ -31,6 +31,21 @@ sap.ui.define([
 				iOriginalBusyDelay,
 				oTable = this.byId("table");
 			this._oTable = oTable;
+				var oButtonf = this.byId("button1");
+				var oButtons = this.byId("button2");
+				var oButtont = this.byId("button3");
+			oTable.attachSelectionChange(function(oEvent){
+					var aItems = oEvent.getSource().getSelectedItems();
+				if (aItems.length > 0){
+		oButtonf.setVisible(true);
+			oButtons.setVisible(true);
+				oButtont.setVisible(true);
+				}else if(aItems.length == 0){
+						oButtonf.setVisible(false);
+			oButtons.setVisible(false);
+				oButtont.setVisible(false);
+				}
+			});
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
@@ -49,7 +64,8 @@ sap.ui.define([
 				moreUrgent: 0
 			});
 			this.setModel(oViewModel, "worklistView");
-
+  
+ 
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -69,7 +85,7 @@ sap.ui.define([
         					});
         					
     		},600000);
-    		               
+    		  
 		},
 
 		/* =========================================================== */
@@ -146,6 +162,7 @@ sap.ui.define([
 				sTitle = this.getResourceBundle().getText("worklistTableTitle");
 			}
 			this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
+				     
 		},
 
 		/**
@@ -157,7 +174,282 @@ sap.ui.define([
 			// The source is the list item that got pressed
 			this._showObject(oEvent.getSource());
 		},
+		
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/**
+		 * MP: 
+		 * Modifiche per apporvare, rifiutare o muovere più task contemporaneamente
+		 * dalla vista di tutti i task.
+		 */ 
+		 
+			//Method to show the Popover Fragment
+		showPopover: function(oEvent) {
+			var that = this;
+			this.sKey = undefined; //(SE) ripulisco key popover
+		    this.Dialog = undefined;  //(SE) ripulisco dialog
+		    //this.sButtonKey = undefined; //(SE) ripulisco button del dialog
+		    this.sButtonKey = oEvent.getSource().getId();
+			if (!that._oPopover) {
 
+				that._oPopover = sap.ui.xmlfragment("Workflow.view.Popover", this, "Workflow.controller.Worklist");
+				//to get access to the global model
+				this.getView().addDependent(that._oPopover);
+			}
+			var oButton = oEvent.getSource();
+			jQuery.sap.delayedCall(0, this, function() {
+				this._oPopover.openBy(oButton);
+			    sap.ui.getCore().byId("combo").setValue("");//Cancella il contenuto del comboBox nel Popover.
+			});
+
+ 	
+				/** MP
+				 * Su smartphone l'input field non funziona a dovere 
+				 * le seguenti righe di codice servono per disabilitare
+				 * l'autocomplete e l'autoselect.
+				 */
+				var oComboBox = sap.ui.getCore().byId("combo");
+				oComboBox.addEventDelegate({
+					onkeydown: function(oEvent) {
+							if (oEvent.which == 8) {
+								oComboBox.setValue("");
+							}
+					}
+				});
+	
+
+		},
+
+		//Show confirmation dialog
+		showDialog: function(oEvent) {
+			var that = this;
+			this.sKey = undefined; //(SE) ripulisco key popover
+			this._oPopover = undefined; //(SE) ripulisco popover
+			this.sButtonKey = oEvent.getSource().getId(); //mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
+			if (!that.Dialog) {
+
+				that.Dialog = sap.ui.xmlfragment("Workflow.view.Dialog", this, "Workflow.controller.Worklist");
+				//to get access to the global model
+				this.getView().addDependent(that.Dialog);
+				if (sap.ui.Device.system.phone) {
+					that.Dialog.setStretch(true);
+				}
+			}
+			that.Dialog.open();
+		},
+		
+			closeDialog: function() {
+			if (this.Comment) {
+				this.Comment.setState("None");
+				this.Comment.setTitle("");
+				sap.ui.getCore().byId("feed").setValue("");
+				this.Comment.close();
+			}
+			if (this.Dialog) {
+				this.Dialog.close();
+				this.sButtonKey = undefined; //per controllare i conflitti in actionTask N.B.
+			}
+		},
+
+		//Method to handle cancel on the Popover for user selection
+		closePopover: function() {
+			this._oPopover.close();
+		},
+		//Method to retrieve the selected key from the comboBox in Popover.fragment.xml		
+		selectionChange: function(oEvent) {
+            
+			this.sKey = oEvent.getSource().getProperty("selectedKey");
+			return this.sKey;
+		},
+
+		//Method to load the Date just once requested
+		lazyLoadItems: function(oEvent) {
+			oEvent.getSource().getBinding("items").resume();
+		},
+
+
+/**
+ * MP: Azioni per selezione multipla
+ */
+	   actionTask: function() {
+
+			var sButtonId;
+			var sTypeAction;
+			var oView, oViewW;
+			var sSelectedTaskid;
+			var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
+			//var  i, sPath, oTask, oTaskId; (variabili inutilizzate)
+			
+			//MP: aggiungo array che contiene i task ID selezionati nel multiselect 
+		
+			var aSelectedTaskid = this.byId("table").getSelectedItems();
+			
+			oView = this.getView();
+			
+			//MP
+			//var oObject = oView.getBindingContext().getObject();
+		
+            ////////////////////////////////// (SE)
+            //START - MOVE ACTION POPOVER CHECK 
+			if (this._oPopover) {
+				this._oPopover.close();
+				sap.ui.getCore().byId("combo").setValue("");
+				sUname = this.sKey;
+			//	this.sButtonKey = undefined; //SE 31072017 ripulisco variabile OK-KO in caso di MOVE
+				
+				if (sUname == undefined || sUname == "")   {
+					
+				jQuery.sap.require("sap.m.MessageBox");
+			            sap.m.MessageBox.show(
+					      "Error: Please, select a valid user", {
+					          icon: sap.m.MessageBox.Icon.ERROR,
+					          title: "Error",
+					          actions: [sap.m.MessageBox.Action.CLOSE]
+					      }
+					    );
+					    return; // se popover è in errore termino la function
+				}
+			}
+			////// END - MOVE ACTION POPOVER CHECK
+			
+			/////////////////////////////////// (SE)
+			//START - APPROVE-REJECT ACTION DIALOG CHECK 
+			if (this.Dialog) {
+				this.Dialog.close();
+			
+			}
+            ////// END - MOVE ACTION POPOVER CHECK
+            
+
+						sButtonId = this.sButtonKey;
+		
+						/** MP
+						 * La forma oView.byId(<sID statico>).getId() è importante da mantenere
+						 * in quanto una volta che l'applicazione è deployata ed eseguita sul server
+						 * il prefisso dell'id statico cambia. Referenziando il controllo con il suo 
+						 * id staticoutilizzando questa forma fa si che il controllo e la logica 
+						 * applicata ad esso o a partire da azioni su di esso non cambi in dipendenza 
+						 * dell'ambiente di esecuzione e del prefisso applicato. 
+						 * FORMA PRECEDENTE: (sButtonId == "application-zworkflow-display-component---object--btn1") 
+						 */
+						 
+						 sUser  = "";
+						 sAction = undefined;
+						 
+						 sTypeAction = undefined;
+						if (sButtonId == oView.byId("button1").getId()) {
+							sAction = "OK";
+							sTypeAction = "Tasks approved";
+							sUname = undefined;
+						} else if (sButtonId == oView.byId("button2").getId()) {
+							sAction = "KO";
+							sTypeAction = "Tasks rejected";
+							sUname = undefined;
+						//(SE)
+				    	} else if ((sButtonId == oView.byId("button3").getId()) && (sUname != undefined))  {
+						    sAction = "MOVE";
+						    sTypeAction = "Tasks moved";
+							sUser = sUname;
+						}
+						
+						//MP: Chiamata a ZWfAction passando di volta in volta gli elementi dell'array
+						//(Taskid selezionati)
+						
+						if(aSelectedTaskid.length){
+							for(var i = 0; i < aSelectedTaskid.length; i++){
+							var oTask = aSelectedTaskid[i];
+					        var sTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
+					        var aBatchChanges = [];
+					        
+							var oUrlParams = {
+							//ZWfTaskid : "0000025000",
+							ZWfTaskid: sTaskId, //modificato passando la stringa come parametro
+							ZWfActionType: sAction,
+							ZWfUser: sUser
+						};
+						
+						//var oView = this.getView();
+						//oModel = this.getModel(),
+						var oModel = this.getModel();
+						oModel.setUseBatch(false); // una operazione per volta altrimenti va in errore
+						// lancio la function import creata sull'odata
+						oModel.callFunction("/ZWfAction", {
+							method: "POST",
+							urlParameters: oUrlParams,
+							success: fnS,
+							error: fnE
+						});
+		                   }
+						}else{
+							return;
+						}
+		
+				
+					
+
+
+					function fnS(oData, response) {
+						console.log(oData);
+						console.log(response);
+		
+						// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
+						if (oData.Type == "S") {
+							var msg = "Success: "+oData.Message+", "+sTypeAction;
+		        					sap.m.MessageToast.show(msg, { duration: 5000,
+		        					autoClose: true,
+		        					 closeOnBrowserNavigation: false
+		        						
+		        					});
+							//	alert("Success: "+oData.Message);
+							/** MP
+							 *  Recupero il prefisso che viene messo di default alle viste nell'app.
+							 *  Stesso discorso fatto sopra per i bottoni. Piuttosto che avere il 
+							 *  prefisso statico dichiarato me lo ricavo. In questo modo l'applicazione
+							 *  svolge le correttamente le funzionalità indipendentemente dall'ambiente
+							 *  di run.
+							 */
+							 
+							 //MP: parte commentata perchè usata solo in nella vista di dettaglio
+							 
+							//var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
+							//oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
+							//var oTable = oViewW.byId("table");
+							var oTable = oView.byId("table");
+							oTable.getBinding("items").refresh();
+							//sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
+						} else {
+							//richiama una funzione di Object.Controller con questa sintassi
+		
+									//		alert("Error: "+oData.Message); 
+									
+								jQuery.sap.require("sap.m.MessageBox");
+					            sap.m.MessageBox.show(
+							      "Error: "+oData.Message, {
+							          icon: sap.m.MessageBox.Icon.WARNING,
+							          title: "Error",
+							          actions: [sap.m.MessageBox.Action.CLOSE]
+							          
+							      });
+								  
+								}
+
+					}// END FUNCTION SUCCESS
+
+					function fnE(oError) {
+						console.log(oError);
+		
+						alert("Error in read: " + oError.message);
+					}
+					
+				          // var oTable = oView.byId("table");
+						//	oTable.getBinding("items").refresh();
+
+		},
+		
+		
+		
+       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       
 		/**
 		 * Navigates back in the browser history, if the entry was created by this app.
 		 * If not, it navigates to the Fiori Launchpad home page.

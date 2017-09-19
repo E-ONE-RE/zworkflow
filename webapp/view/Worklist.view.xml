@@ -54,11 +54,18 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 				</items>
 			</IconTabBar>
 			<!-- (SE) multiselect per poter selezionare più righe 21062017-->
-			<Table id="table" 
-			
-			width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
+			<!-- <Table id="table" 
+	            mode="MultiSelect"
+			    width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-				updateFinished="onUpdateFinished" backgroundDesign="Translucent">
+				updateFinished="onUpdateFinished" backgroundDesign="Translucent"> 
+			fine multiselect-->	
+	 
+	 	<Table id="table" 
+			    width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
+				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished" backgroundDesign="Translucent"> 
+			
 				<headerToolbar>
 					<Toolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
@@ -165,9 +172,20 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 			</Table>
 		</content>
 		<footer>
-			<OverflowToolbar id="footerToolbar">
+			<OverflowToolbar id="footerToolbarWL">
 				<ToolbarSpacer/>
-				    
+				 	<Button id="button1" type="Accept" text="Approve" press="showDialog" visible="false">
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				  </Button>
+				  <Button id="button2" type="Reject" text="Reject" press="showDialog" visible="false">
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				   </Button>
+				  	<Button id="button3" type="Default" text="Move" press="showPopover" visible="false">
+             
+				  <layoutData><OverflowToolbarLayoutData moveToOverflow="false" /></layoutData>
+				</Button>
+						
+		<!--
 				<ToolbarSpacer/>
 				<Button id="shareButton" tooltip="{i18n>shareTooltip}" icon="sap-icon://action" press="onSharePress">
 					<dependents>
@@ -179,7 +197,8 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 							</buttons>
 						</ActionSheet>
 					</dependents>
-				</Button>
+				</Button> 
+				!-->
 
 			</OverflowToolbar>
 		</footer>

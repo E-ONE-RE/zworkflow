@@ -121,7 +121,7 @@ sap.ui.define([
 					}
 				}
 			});
-			
+			oModel.setSizeLimit(9999);
 			this.setModel(oModel);
 			this._createMetadataPromise(oModel);
 			// set the i18n model

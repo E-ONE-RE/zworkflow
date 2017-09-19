@@ -38,6 +38,15 @@ td[aria-describedby = application-zworkflow-display-component---object--nameColu
     background-color: #ce7b02;
 }
 
+#application-zworkflow-display-component---worklist--button3-inner {
+    background-color: #ff9800;
+    cursor: pointer;
+}
+
+#application-zworkflow-display-component---worklist--button3-inner:hover {
+    background-color: #ce7b02;
+}
+
 #application-zworkflow-display-component---object--btn4-inner {
     cursor: pointer;
     text-align: center;
@@ -95,6 +104,15 @@ td[aria-describedby = application-Zworkflow-display-component---object--nameColu
 }
 
 #application-Zworkflow-display-component---object--btn3-inner:hover {
+    background-color: #ce7b02;
+}
+
+#application-Zworkflow-display-component---worklist--button3-inner {
+    background-color: #ff9800;
+    cursor: pointer;
+}
+
+#application-Zworkflow-display-component---worklist--button3-inner:hover {
     background-color: #ce7b02;
 }
 
