@@ -54,11 +54,18 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 				</items>
 			</IconTabBar>
 			<!-- (SE) multiselect per poter selezionare più righe 21062017-->
-			<Table id="table" 
-			mode="MultiSelect"
-			width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
+			<!-- <Table id="table" 
+	            mode="MultiSelect"
+			    width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
 				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-				updateFinished="onUpdateFinished" backgroundDesign="Translucent">
+				updateFinished="onUpdateFinished" backgroundDesign="Translucent"> 
+			fine multiselect-->	
+	 
+	 	<Table id="table" 
+			    width="auto" class="sapUiResponsiveMargin" items="{ path: '/TaskSet', sorter: { path: 'ZWfUtente', descending: false } }"
+				noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished" backgroundDesign="Translucent"> 
+			
 				<headerToolbar>
 					<Toolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
